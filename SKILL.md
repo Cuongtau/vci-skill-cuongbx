@@ -2,11 +2,12 @@
 name: vci-skill-cuongbx
 description: |
   Sinh tài liệu PRD/Spec chuẩn .md phục vụ toàn bộ team phát triển sản phẩm
-  (BA, Dev, QA, Tester, PM, Tech Lead). Hỗ trợ 9 chế độ: Generate, Structure,
-  Update, Audit, Dev Guide (BE/FE), Test Gen, Summary, Track, Report.
+  (BA, Dev, QA, Tester, PM, Tech Lead). Hỗ trợ 10 chế độ: Generate, Structure,
+  Update, Audit, Dev Guide (BE/FE), Test Gen, Summary, Track, Report, Mockup.
   Dùng khi user nói "tạo spec", "viết PRD", "tạo tài liệu BA", "dev guide",
   "sinh test cases", "báo cáo tiến độ", "kiểm tra spec", "so sánh code",
-  "tóm tắt feature", "scope thay đổi gì", "cập nhật spec", "UAT script".
+  "tóm tắt feature", "scope thay đổi gì", "cập nhật spec", "UAT script",
+  "tạo mockup", "mockup UI".
 ---
 
 # Goal
@@ -25,6 +26,7 @@ Khi user kích hoạt skill, xác định **vai trò** và **chế độ**:
 2. Nếu không rõ → hỏi: *"Anh/chị đang ở vai trò nào? (BA / Dev / QA / PM)"*
 
 | Trigger keywords | Mode | Vai trò |
+
 |-----------------|------|---------|
 | "tạo spec", "viết PRD", "tạo tài liệu" | **Generate** | BA |
 | "cấu trúc lại", "có meeting notes", "ghi chú cuộc họp" | **Structure** | BA |
@@ -35,12 +37,14 @@ Khi user kích hoạt skill, xác định **vai trò** và **chế độ**:
 | "tóm tắt", "overview", "summary feature" | **Summary** | PM + All |
 | "ai đang làm gì", "tiến độ", "status", "track" | **Track** | PM |
 | "báo cáo PMO", "report", "sprint report" | **Report** | PM → PMO |
+| "tạo mockup", "mockup UI", "vẽ giao diện" | **Mockup** | BA + FE Dev |
 
 Điều chỉnh ngôn ngữ theo vai trò:
 - **PM**: ngắn gọn, business-focused, Level 1-2
 - **BA**: chuẩn template, đầy đủ Level 1-4
 - **Dev**: kỹ thuật, code-centric, Level 3-4
 - **QA/Tester**: test-oriented, AC-focused, Level 3-4
+- **FE Dev**: tập trung UI, component, mockup |
 
 ---
 
@@ -230,6 +234,23 @@ Khi user kích hoạt skill, xác định **vai trò** và **chế độ**:
 
 ---
 
+## Mode 10: Mockup (BA / FE Dev → Tạo Code Mockup tĩnh)
+
+📚 **Quy tắc chi tiết:** `ui-mockup.md`
+
+1. Đọc nội dung spec liên quan (nếu có).
+2. Tạo/Sửa Code React (`.tsx`) ở `src/mockups/features/.../` với cấu trúc tương ứng từ `docs/features/.../` để sinh giao diện tĩnh.
+3. **KHÔNG Gắn Logic phức tạp**: Dùng dummy text, mock data. Nhưng phải có đủ CSS hover, form state. Sử dụng component chuẩn từ thông tin workflow design system.
+4. **Đồng bộ Chéo**:
+   - Nếu đổi Mockup UI làm lệch Spec → Cảnh báo BA, **HỎI trước khi sửa `.md`**.
+   - Nếu đổi Spec làm lệch Mockup UI → Báo hiệu Mockup hiện đang outdate, gợi ý update `.tsx`.
+   - **Tối Kỵ**: KHÔNG TỰ Ý ghi file `.md` khi cập nhật `.tsx` mà chưa có sự đồng ý của User.
+5. Cập nhật Router: Ghi nhận lazy load và route tại `src/mockups/MockupHub.tsx`.
+6. Tự động kiểm tra Lỗi (`Self-Healing`): Khi lưu component `.tsx` mới nếu gặp lỗi import hay thiếu props, AI tự tìm code gốc để xử lý.
+7. Khi BA đồng ý, cập nhật `.md` thêm mục `## Liên kết Mockup & Lịch sử cập nhật`.
+
+---
+
 # Examples
 
 ## Ví dụ 1: BA tạo spec mới (Generate Mode)
@@ -261,6 +282,13 @@ BR pseudo-code, State Machine guards, Validation chain, Caching strategy.
 **Output:** AI đọc git log + spec changelogs → Dashboard: Progress Matrix,
 Recent Activity (dev_A push 3 commits nhập kho, BA update spec xuất kho),
 Scope Alerts (IMS_NK_01 scope +35%, 2 CRs chưa approve).
+
+## Ví dụ 4: BA dùng Mockup Gen (Mockup Mode)
+
+**Input:**
+> "Tạo mockup cho màn hình đăng nhập, lấy chuẩn từ spec IMS_AUTH_01"
+
+**Output:** AI tạo `src/mockups/features/auth/IMS_AUTH_01_Mockup.tsx` bằng UI Component hệ thống, đăng ký route vào MockupHub, sau đó cập nhật thông báo về Mockup URL.
 
 ---
 

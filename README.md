@@ -10,9 +10,9 @@ Sinh tài liệu PRD/Spec chuẩn trong **10 phút** (thay vì 2-3 giờ), phụ
 
 | Vai trò | Modes | Điểm chất lượng |
 |---------|-------|-----------------|
-| BA | Generate, Structure, Update, Audit | 10/10 |
+| BA | Generate, Structure, Update, Audit, Mockup | 10/10 |
 | Backend Dev | Dev Guide (BE) | 10/10 |
-| Frontend Dev | Dev Guide (FE) | 10/10 |
+| Frontend Dev | Dev Guide (FE), Mockup | 10/10 |
 | Tech Lead | Audit (Tech Review) | 10/10 |
 | QA / Tester | Test Gen | 10/10 |
 | PM | Summary, Track, Report | 10/10 |
@@ -30,6 +30,7 @@ Sinh tài liệu PRD/Spec chuẩn trong **10 phút** (thay vì 2-3 giờ), phụ
 | 7 | **Summary** | `tóm tắt [feature_id]` | Tóm tắt 1 trang cho PM |
 | 8 | **Track** | `tiến độ` hoặc `ai đang làm gì` | Dashboard hoạt động từ git + spec |
 | 9 | **Report** | `báo cáo PMO` hoặc `report` | Báo cáo tiến độ + Release Notes |
+| 10 | **Mockup** | `tạo mockup [feature_id]` | Tạo giao diện Mockup tĩnh 1-1 với spec |
 
 ## 📦 Cài đặt
 
@@ -104,6 +105,7 @@ docs/specs/{module}/{Feature_ID}_{tên}/
 - **Scope Change Detection** — Tự tạo Change Request khi spec Approved bị sửa
 - **Code-Spec Comparison** — So sánh code implement vs spec → RTM
 - **Auto Changelog** — Version + Author + Date + Changes tự động
+- **Mockup Syncing** — Tự động sinh giao diện tĩnh Code-as-Mockup, đồng bộ chéo cảnh báo với file spec
 - **BDD Test Cases** — Từ AC sinh Given/When/Then
 - **Security & Performance Tests** — SQL injection, XSS, RBAC, load test
 - **Automation Skeleton** — Playwright/Cypress template code
@@ -120,6 +122,7 @@ tạo spec cho tính năng nhập kho vật tư
 cấu trúc lại meeting notes thành spec
 cập nhật spec IMS_NK_01 thêm business rule mới
 kiểm tra spec IMS_NK_01 có thiếu gì không
+tạo mockup cho tính năng nhập kho vật tư
 ```
 
 ### 👨‍💻 Developer — Hướng dẫn implement
@@ -157,14 +160,16 @@ vci-skill-cuongbx/
 │   ├── dev_guide_template.md             ← BE (8 sections) + FE (8 sections)
 │   ├── test_gen_template.md              ← BDD + Security + Perf + Automation
 │   └── pm_report_template.md             ← Track dashboard + PMO report
+├── ui-mockup.md                          ← Hướng dẫn và quy tắc sinh UI Mockup
 └── examples/
-    └── example_dispatch_order.md          ← Full example output
+    └── example_dispatch_order.md         ← Full example output
 ```
 
 ## 📝 Changelog
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.2.0 | 2026-04-09 | Nâng cấp: Thêm tính năng Mockup Code tĩnh (Mode 10) |
 | 1.1.1 | 2026-03-11 | Cải thiện README: hướng dẫn cài đặt chi tiết, lệnh sử dụng rõ ràng |
 | 1.1.0 | 2026-03-11 | Nâng cấp: thêm advanced features, 9 modes hoàn chỉnh |
 | 1.0.0 | 2026-03-11 | Initial release — 9 modes, 10/10 all roles |
