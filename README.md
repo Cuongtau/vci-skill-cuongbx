@@ -1,187 +1,212 @@
 # vci-skill-cuongbx
 
-> 🤖 AI Skill sinh tài liệu PRD/Spec chuẩn `.md` phục vụ toàn bộ team phát triển sản phẩm.
+> AI Skill sinh tai lieu PRD/Spec chuan `.md` phuc vu toan bo team phat trien san pham.
 
-## 🎯 Mục tiêu
+## Muc tieu
 
-Sinh tài liệu PRD/Spec chuẩn trong **10 phút** (thay vì 2-3 giờ), phục vụ toàn bộ team SDLC — từ BA viết spec, Dev implement, QA test, đến PM track progress.
+Sinh tai lieu PRD/Spec chuan trong **10 phut** (thay vi 2-3 gio), phuc vu toan bo team SDLC — tu BA viet spec, Dev implement, QA test, den PM track progress va bao cao PMO.
 
-## 👥 Đối tượng sử dụng
+## Doi tuong su dung
 
-| Vai trò | Modes | Điểm chất lượng |
-|---------|-------|-----------------|
-| BA | Generate, Structure, Update, Audit, Mockup | 10/10 |
-| Backend Dev | Dev Guide (BE) | 10/10 |
-| Frontend Dev | Dev Guide (FE), Mockup | 10/10 |
-| Tech Lead | Audit (Tech Review) | 10/10 |
-| QA / Tester | Test Gen | 10/10 |
-| PM | Summary, Track, Report | 10/10 |
+| Vai tro | Modes | Mo ta |
+|---------|-------|-------|
+| BA | Generate, Structure, Update, Audit, Mockup | Tao & quan ly spec day du |
+| Backend Dev | Dev Guide (BE) | Huong dan implement: schema, API, guards |
+| Frontend Dev | Dev Guide (FE), Mockup | Components, validation UX, mockup |
+| Tech Lead | Audit (Tech Review) | Architecture, performance, security review |
+| QA / Tester | Test Gen | BDD tests, security, performance, automation |
+| PM | Summary, Track, Report | Dashboard, bao cao PMO, release notes |
 
-## 🚀 9 Modes
+## 10 Modes
 
-| # | Mode | Lệnh sử dụng | Mô tả |
-|---|------|---------------|--------|
-| 1 | **Generate** | `tạo spec [tên feature]` | Sinh PRD 4 level từ mô tả nghiệp vụ |
-| 2 | **Structure** | `cấu trúc lại [meeting notes / text]` | Biến thông tin rời rạc thành spec chuẩn |
-| 3 | **Update** | `cập nhật spec [feature_id]` | Sửa spec + auto changelog + CR detection |
-| 4 | **Audit** | `kiểm tra spec [feature_id]` | Gap detection + Code-Spec comparison + RTM |
-| 5 | **Dev Guide** | `dev guide [BE/FE] cho [feature]` | Sinh hướng dẫn implement (BE hoặc FE) |
-| 6 | **Test Gen** | `sinh test [feature_id]` | Sinh BDD test + Security + Performance + Automation |
-| 7 | **Summary** | `tóm tắt [feature_id]` | Tóm tắt 1 trang cho PM |
-| 8 | **Track** | `tiến độ` hoặc `ai đang làm gì` | Dashboard hoạt động từ git + spec |
-| 9 | **Report** | `báo cáo PMO` hoặc `report` | Báo cáo tiến độ + Release Notes |
-| 10 | **Mockup** | `tạo mockup [feature_id]` | Tạo giao diện Mockup tĩnh 1-1 với spec |
+| # | Mode | Lenh su dung | Mo ta |
+|---|------|--------------|-------|
+| 1 | **Generate** | `tao spec [ten feature]` | Sinh PRD 4 level tu mo ta nghiep vu |
+| 2 | **Structure** | `cau truc lai [meeting notes]` | Bien thong tin roi rac thanh spec chuan |
+| 3 | **Update** | `cap nhat spec [feature_id]` | Sua spec + auto changelog + CR detection |
+| 4 | **Audit** | `kiem tra spec [feature_id]` | Gap detection + Code-Spec comparison + RTM |
+| 5 | **Dev Guide** | `dev guide [BE/FE] cho [feature]` | Sinh huong dan implement (BE hoac FE) |
+| 6 | **Test Gen** | `sinh test [feature_id]` | BDD test + Security + Performance + Automation |
+| 7 | **Summary** | `tom tat [feature_id]` | Tom tat 1 trang cho PM |
+| 8 | **Track** | `tien do` hoac `ai dang lam gi` | Dashboard hoat dong tu git + spec |
+| 9 | **Report** | `bao cao PMO` hoac `report` | Bao cao tien do + Release Notes |
+| 10 | **Mockup** | `tao mockup [feature_id]` | Giao dien Mockup tinh React/Tailwind |
 
-## 📦 Cài đặt
+## Cai dat
 
-### Yêu cầu
+### Yeu cau
 
-- [Gemini Antigravity](https://gemini.google.com) đã được cài đặt
+- [Claude Code](https://claude.ai/code) hoac [Gemini Antigravity](https://gemini.google.com) da cai dat
 - Git
+- Node.js 18+ (optional, cho ClaudeKit hooks)
 
-### Cách 1: Clone trực tiếp vào thư mục skills (Khuyến nghị)
+### Cach 1: Clone truc tiep (Khuyen nghi)
 
 **Windows (PowerShell):**
 ```powershell
-# Clone repo thẳng vào thư mục skills của Antigravity
 git clone https://github.com/Cuongtau/vci-skill-cuongbx.git "$env:USERPROFILE\.gemini\antigravity\skills\vci-skill-cuongbx"
 ```
 
 **macOS / Linux:**
 ```bash
-# Clone repo thẳng vào thư mục skills của Antigravity
 git clone https://github.com/Cuongtau/vci-skill-cuongbx.git ~/.gemini/antigravity/skills/vci-skill-cuongbx
 ```
 
-### Cách 2: Clone rồi copy thủ công
+### Cach 2: Dung voi Claude Code
 
 ```bash
-# Bước 1: Clone repo
+# Clone repo
 git clone https://github.com/Cuongtau/vci-skill-cuongbx.git
+cd vci-skill-cuongbx
 
-# Bước 2: Copy vào thư mục skills
-# Windows (PowerShell):
-Copy-Item -Recurse vci-skill-cuongbx "$env:USERPROFILE\.gemini\antigravity\skills\vci-skill-cuongbx"
-
-# macOS / Linux:
-cp -r vci-skill-cuongbx ~/.gemini/antigravity/skills/vci-skill-cuongbx
+# Bat dau Claude Code
+claude
 ```
 
-### Cách 3: Cập nhật skill (đã cài trước đó)
+### Cach 3: Cap nhat skill
 
 ```bash
-# Di chuyển vào thư mục skill và pull bản mới nhất
 cd ~/.gemini/antigravity/skills/vci-skill-cuongbx   # macOS/Linux
 cd $env:USERPROFILE\.gemini\antigravity\skills\vci-skill-cuongbx   # Windows
-
 git pull origin master
 ```
 
-### ✅ Kiểm tra cài đặt thành công
+### Kiem tra cai dat
 
-Sau khi cài, mở Antigravity và thử nói:
+Mo AI agent va thu noi:
+```
+Tao spec cho tinh nang dang nhap
+```
+Neu AI nhan dien skill va bat dau hoi thong tin → **cai dat thanh cong!**
+
+## Cau truc output
 
 ```
-Tạo spec cho tính năng đăng nhập
-```
-
-Nếu AI nhận diện skill và bắt đầu hỏi thông tin → **cài đặt thành công!** 🎉
-
-## 📁 Cấu trúc output
-
-```
-docs/specs/{module}/{Feature_ID}_{tên}/
+docs/specs/{module}/{Feature_ID}_{ten}/
 ├── spec.md          ← PRD 4 level (Auto TOC, Changelog, CR Log)
-├── diagrams.md      ← Mermaid: State + Flow + ERD + Sequence
-├── dev_guide.md     ← Hướng dẫn implement (BE hoặc FE)
+├── diagrams.md      ← Mermaid (optional, khi spec > 500 dong)
+├── dev_guide.md     ← Huong dan implement (BE hoac FE)
 ├── test_cases.md    ← BDD + Matrix + Security + Performance
 └── test_mapping.md  ← Requirement → Test traceability
 ```
 
-## ⚡ Tính năng nổi bật
+## Tinh nang noi bat
 
-- **Auto Gap Detection** — Tự phát hiện spec thiếu AC, State thiếu Button, Field thiếu Validate
+- **Auto Gap Detection** — Tu phat hien spec thieu AC, State thieu Button, Field thieu Validate
+- **Auto-Fix Critical** — Tu dong bo sung gap 🔴 Critical truoc khi tra output
 - **Mermaid Diagrams** — State Machine, Screen Flow, ERD, Sequence, Data Flow
-- **Scope Change Detection** — Tự tạo Change Request khi spec Approved bị sửa
-- **Code-Spec Comparison** — So sánh code implement vs spec → RTM
-- **Auto Changelog** — Version + Author + Date + Changes tự động
-- **Mockup Syncing** — Tự động sinh giao diện tĩnh Code-as-Mockup, đồng bộ chéo cảnh báo với file spec
-- **BDD Test Cases** — Từ AC sinh Given/When/Then
-- **Security & Performance Tests** — SQL injection, XSS, RBAC, load test
-- **Automation Skeleton** — Playwright/Cypress template code
+- **Scope Change Detection** — Tu tao Change Request khi spec Approved bi sua
+- **Code-Spec Comparison** — So sanh code vs spec → RTM + Deviation Report
+- **Auto Changelog** — Version + Author + Date + Changes tu dong
+- **Mockup Sync** — Code-as-Mockup React/Tailwind, dong bo cheo Spec↔Mockup
+- **BDD Test Cases** — Tu AC sinh Given/When/Then
+- **Security & Perf Tests** — SQL injection, XSS, RBAC, k6 load test
+- **Automation Skeleton** — Playwright template code
 - **PM Dashboard** — Progress Matrix, Scope Alerts, Activity tracking
 - **Release Communication** — Email/Slack template cho stakeholders
 
-## 🔧 Sử dụng
+## Su dung
 
-Chỉ cần chat với AI bằng ngôn ngữ tự nhiên. Dưới đây là các lệnh mẫu cho từng vai trò:
+Chat voi AI bang ngon ngu tu nhien:
 
-### 👨‍💼 BA — Tạo & quản lý spec
+### BA
 ```
-tạo spec cho tính năng nhập kho vật tư
-cấu trúc lại meeting notes thành spec
-cập nhật spec IMS_NK_01 thêm business rule mới
-kiểm tra spec IMS_NK_01 có thiếu gì không
-tạo mockup cho tính năng nhập kho vật tư
+tao spec cho tinh nang nhap kho vat tu
+cau truc lai meeting notes thanh spec
+cap nhat spec IMS_NK_01 them business rule moi
+kiem tra spec IMS_NK_01 co thieu gi khong
+tao mockup cho man hinh nhap kho
 ```
 
-### 👨‍💻 Developer — Hướng dẫn implement
+### Developer
 ```
-dev guide backend cho feature nhập kho
+dev guide backend cho feature nhap kho
 dev guide frontend cho feature IMS_NK_01
-so sánh code với spec IMS_NK_01
+so sanh code voi spec IMS_NK_01
 ```
 
-### 🧪 QA / Tester — Sinh test cases
+### QA / Tester
 ```
 sinh test cases cho feature IMS_NK_01
-sinh test matrix cho nhập kho
-tạo automation script cho IMS_NK_01
+sinh test matrix cho nhap kho
+tao automation script cho IMS_NK_01
 ```
 
-### 📊 PM — Theo dõi & báo cáo
+### PM
 ```
-ai đang làm gì?
-tóm tắt feature nhập kho
-báo cáo PMO sprint này
-tiến độ dự án hiện tại
+ai dang lam gi?
+tom tat feature nhap kho
+bao cao PMO sprint nay
+tien do du an hien tai
 ```
 
-## 📂 Cấu trúc Skill
+## Cau truc Project
 
 ```
 vci-skill-cuongbx/
-├── SKILL.md                              ← Skill instructions (9 modes)
-├── README.md                             ← This file
-├── resources/
-│   ├── prd_template.md                   ← PRD 4-level template
-│   ├── mermaid_patterns.md               ← 6 loại diagram patterns
-│   ├── gap_detection_rules.md            ← Audit rules + Tech Lead checklist
-│   ├── dev_guide_template.md             ← BE (8 sections) + FE (8 sections)
-│   ├── test_gen_template.md              ← BDD + Security + Perf + Automation
-│   └── pm_report_template.md             ← Track dashboard + PMO report
-├── ui-mockup.md                          ← Hướng dẫn và quy tắc sinh UI Mockup
-└── examples/
-    └── example_dispatch_order.md         ← Full example output
+├── SKILL.md                           ← Skill definition (10 modes)
+├── CLAUDE.md                          ← Claude Code instructions
+├── README.md                          ← This file
+├── .claude/                           ← ClaudeKit framework
+│   ├── agents/                        ← 14 AI agents (planner, researcher, tester...)
+│   ├── rules/                         ← Development rules & workflows
+│   ├── hooks/                         ← Lifecycle hooks (session, privacy, scout)
+│   ├── skills/                        ← Support skills (ck-plan, ck-debug, etc.)
+│   ├── output-styles/                 ← Coding level styles (ELI5 → God)
+│   └── settings.json                  ← Hook configuration
+├── references/                        ← Reference docs (ClaudeKit-style)
+│   ├── templates/                     ← Output templates
+│   │   ├── prd-template.md            ← PRD 4-level template
+│   │   ├── dev-guide-template.md      ← BE (8 sections) + FE (8 sections)
+│   │   ├── test-gen-template.md       ← BDD + Security + Perf + Automation
+│   │   └── pm-report-template.md      ← Track dashboard + PMO report
+│   ├── rules/                         ← Quality rules
+│   │   └── gap-detection-rules.md     ← Audit + Tech Lead checklist
+│   └── patterns/                      ← Reusable patterns
+│       ├── mermaid-patterns.md        ← 6 diagram types
+│       └── ui-mockup-patterns.md      ← Code-as-Mockup sync
+├── examples/                          ← Example outputs
+│   └── example-dispatch-order.md      ← Full 4-level example
+├── docs/                              ← Project documentation
+├── plans/                             ← Implementation plans
+└── guide/                             ← Skills catalog & environment
 ```
 
-## 📝 Changelog
+## ClaudeKit Integration
+
+Project nay duoc tich hop **ClaudeKit Engineer** framework de ho tro phat trien:
+
+- **14 AI Agents**: planner, researcher, code-reviewer, tester, docs-manager...
+- **Lifecycle Hooks**: session-init, privacy-block, scout-block, dev-rules-reminder
+- **Support Skills**: `/ck:plan`, `/ck:debug`, `/ck:scout`, `/ck:docs`
+- **Development Rules**: YAGNI, KISS, DRY, modularization, quality gates
+
+### ClaudeKit commands (khi dung Claude Code):
+```bash
+/ck:plan "improve gap detection rules"
+/ck:debug "fix mode 4 audit issues"
+/ck:scout "explore references/ structure"
+/ck:docs                                    # Update documentation
+```
+
+## Changelog
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 1.2.0 | 2026-04-09 | Nâng cấp: Thêm tính năng Mockup Code tĩnh (Mode 10) |
-| 1.1.1 | 2026-03-11 | Cải thiện README: hướng dẫn cài đặt chi tiết, lệnh sử dụng rõ ràng |
-| 1.1.0 | 2026-03-11 | Nâng cấp: thêm advanced features, 9 modes hoàn chỉnh |
-| 1.0.0 | 2026-03-11 | Initial release — 9 modes, 10/10 all roles |
+| 2.0.0 | 2026-04-13 | ClaudeKit integration, restructure references/, improved SKILL.md |
+| 1.2.0 | 2026-04-09 | Them tinh nang Mockup Code tinh (Mode 10) |
+| 1.1.1 | 2026-03-11 | Cai thien README: huong dan cai dat, lenh su dung |
+| 1.1.0 | 2026-03-11 | Nang cap: them advanced features, 9 modes hoan chinh |
+| 1.0.0 | 2026-03-11 | Initial release — 9 modes |
 
-## 📄 License
+## License
 
 MIT
 
-## 👤 Author
+## Author
 
 **CuongBX** — VCI Team
 
 ---
 
-> 💡 **Góp ý & báo lỗi:** Tạo [Issue](https://github.com/Cuongtau/vci-skill-cuongbx/issues) trên GitHub
+> Gop y & bao loi: Tao [Issue](https://github.com/Cuongtau/vci-skill-cuongbx/issues) tren GitHub
