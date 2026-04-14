@@ -1,64 +1,35 @@
 {
-  "$schema": "https://example.com/skills-manifest-v1.json",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "project": "vci-skill-cuongbx",
-  "description": "Unified skill library — 4 zones with bidirectional sync",
-  "zones": {
+  "description": "Main SDLC PRD/Spec skill. Companion zones live in separate repos.",
+  "main_skill": {
+    "name": "vci-skill-cuongbx",
+    "path": "SKILL.md",
+    "description": "10-mode SDLC PRD/Spec generator (BA/Dev/QA/PM/Shared)"
+  },
+  "local_zones": {
     "vci": {
-      "description": "VCI SDLC supporting skills (BA/Dev/QA/PM/Design)",
+      "description": "Support skills tightly coupled với main skill (11 skills)",
       "path": ".claude/skills/vci",
-      "source": "local",
-      "global_path": "~/.claude/skills",
-      "sync_direction": "bidirectional",
-      "git_tracked": true,
-      "skills_count": 11,
-      "owner": "cuongbx"
-    },
-    "claudekit": {
-      "description": "ClaudeKit Engineer core dev tools",
-      "path": ".claude/skills/claudekit",
-      "source": "global",
-      "global_path": "~/.claude/skills",
-      "sync_direction": "pull-only",
-      "git_tracked": true,
-      "skills_count": 1389,
-      "owner": "claudekit"
-    },
-    "xia": {
-      "description": "Feature heist — port from external repos",
-      "path": ".claude/skills/xia",
-      "source": "local",
-      "global_path": "~/.claude/skills",
-      "sync_direction": "bidirectional",
-      "git_tracked": true,
-      "skills_count": 1,
-      "owner": "cuongbx"
-    },
-    "others": {
-      "description": "Antigravity design + UI skills",
-      "path": ".claude/skills/others",
-      "source": "global",
-      "global_path": "~/.gemini/antigravity/skills",
-      "sync_direction": "pull-only",
-      "git_tracked": true,
-      "skills_count": 9,
-      "owner": "antigravity",
-      "exclude_patterns": ["antigravity-awesome-skills", "skill-creator-ultra", "vci-skill-cuongbx"]
+      "tracked": true
     }
   },
-  "ide_install_paths": {
-    "claude-code": ".claude/skills",
-    "claude-code-global": "~/.claude/skills",
-    "antigravity": ".gemini/skills",
-    "antigravity-global": "~/.gemini/antigravity/skills",
-    "cursor": ".cursor/skills",
-    "kilo": ".kilo/skills",
-    "codex": ".codex/skills",
-    "opencode": ".opencode/skills",
-    "windsurf": ".windsurf/skills",
-    "cline": ".cline/skills",
-    "github-copilot": ".github/copilot/skills"
+  "companion_repos": {
+    "claudekit": {
+      "description": "ClaudeKit Engineer core dev tools (~1389 skills)",
+      "url": "https://github.com/cuongbx/skills-claudekit.git",
+      "install_to": ".claude/skills/claudekit"
+    },
+    "xia": {
+      "description": "Feature heist — port from external repos (1 skill)",
+      "url": "https://github.com/cuongbx/skills-xia.git",
+      "install_to": ".claude/skills/xia"
+    },
+    "others": {
+      "description": "Antigravity UI/design skills (9 skills)",
+      "url": "https://github.com/cuongbx/skills-others.git",
+      "install_to": ".claude/skills/others"
+    }
   },
-  "last_synced": null,
-  "sync_history": []
+  "install_command": "bash scripts/install-companion.sh all"
 }

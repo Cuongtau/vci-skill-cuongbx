@@ -1,24 +1,19 @@
 #!/usr/bin/env python3
 """
-audit-skills.py — Audit skill library: count, diff, missing, outdated.
+audit-skills.py — Audit skill library của main repo + detect companion zones.
 
 Usage:
-    python scripts/audit-skills.py                  # full audit
-    python scripts/audit-skills.py --zone vci       # specific zone
-    python scripts/audit-skills.py --diff-global    # compare with global
-    python scripts/audit-skills.py --json           # machine-readable
+    python scripts/audit-skills.py
+    python scripts/audit-skills.py --json
 """
 
 from __future__ import annotations
 import argparse
-import hashlib
 import json
-import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Force UTF-8 for Vietnamese chars on Windows
 if sys.stdout.encoding.lower() != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8")
 
@@ -30,125 +25,92 @@ def load_manifest() -> dict:
     return json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
 
 
-def expand_path(p: str) -> Path:
-    return Path(p.replace("~", str(Path.home())))
-
-
 def count_skills(zone_path: Path) -> tuple[int, list[str]]:
-    """Count direct subfolders that have SKILL.md."""
     if not zone_path.exists():
         return 0, []
-    skills = []
-    for item in zone_path.iterdir():
-        if item.is_dir() and (item / "SKILL.md").exists():
-            skills.append(item.name)
+    skills = [p.name for p in zone_path.iterdir() if p.is_dir() and (p / "SKILL.md").exists()]
     return len(skills), sorted(skills)
 
 
-def hash_skill(skill_path: Path) -> str:
-    """Compute hash of skill folder content (just SKILL.md for speed)."""
-    skill_md = skill_path / "SKILL.md"
-    if not skill_md.exists():
-        return ""
-    return hashlib.sha256(skill_md.read_bytes()).hexdigest()[:12]
-
-
-def audit_zone(zone_name: str, zone_config: dict, diff_global: bool = False) -> dict:
-    local_path = PROJECT_ROOT / zone_config["path"]
-    local_count, local_skills = count_skills(local_path)
-
-    result = {
-        "zone": zone_name,
-        "description": zone_config["description"],
-        "local_path": str(local_path),
-        "local_count": local_count,
-        "expected_count": zone_config["skills_count"],
-        "git_tracked": zone_config["git_tracked"],
-        "sync_direction": zone_config["sync_direction"],
-        "skills": local_skills[:5] + (["..."] if len(local_skills) > 5 else []),
-        "status": "OK" if local_count > 0 else "EMPTY",
+def audit_main_skill() -> dict:
+    skill_md = PROJECT_ROOT / "SKILL.md"
+    exists = skill_md.exists()
+    return {
+        "name": "vci-skill-cuongbx (main)",
+        "exists": exists,
+        "path": str(skill_md),
+        "size_lines": len(skill_md.read_text(encoding="utf-8").splitlines()) if exists else 0,
     }
 
-    if diff_global and zone_config.get("global_path"):
-        global_path = expand_path(zone_config["global_path"])
-        global_count, global_skills = count_skills(global_path)
-        excluded = zone_config.get("exclude_patterns", [])
-        global_skills_filtered = [s for s in global_skills if s not in excluded]
 
-        only_local = sorted(set(local_skills) - set(global_skills_filtered))
-        only_global = sorted(set(global_skills_filtered) - set(local_skills))
-
-        result["global_count"] = len(global_skills_filtered)
-        result["only_local"] = only_local[:10]
-        result["only_global"] = only_global[:10]
-        result["in_sync"] = len(only_local) == 0 and len(only_global) == 0
-
-    return result
+def audit_local_zone(zone_name: str, zone_cfg: dict) -> dict:
+    path = PROJECT_ROOT / zone_cfg["path"]
+    count, skills = count_skills(path)
+    return {
+        "zone": zone_name,
+        "description": zone_cfg["description"],
+        "path": str(path),
+        "count": count,
+        "skills": skills[:5] + (["..."] if len(skills) > 5 else []),
+        "status": "OK" if count > 0 else "EMPTY",
+    }
 
 
-def print_human(audits: list[dict]):
+def audit_companion(name: str, cfg: dict) -> dict:
+    dest = PROJECT_ROOT / cfg["install_to"]
+    count, skills = count_skills(dest)
+    return {
+        "companion": name,
+        "description": cfg["description"],
+        "url": cfg["url"],
+        "install_to": cfg["install_to"],
+        "installed": dest.exists(),
+        "count": count,
+        "status": "INSTALLED" if count > 0 else "NOT INSTALLED",
+    }
+
+
+def print_human(main: dict, local: list[dict], companions: list[dict]):
     print("=" * 60)
-    print("Skill Library Audit Report")
-    print(f"Project: {PROJECT_ROOT.name}")
+    print(f"Audit: {PROJECT_ROOT.name}")
     print(f"Time: {datetime.now(timezone.utc).isoformat()}")
     print("=" * 60)
 
-    total_local = 0
-    for a in audits:
-        emoji = {"vci": "[VCI]", "claudekit": "[CK]", "xia": "[XIA]", "others": "[OTH]"}.get(a["zone"], "[??]")
-        status_icon = "[OK]" if a["status"] == "OK" else "[!!]"
-        tracked = "git-tracked" if a["git_tracked"] else "gitignored"
-        print(f"\n{emoji} Zone: {a['zone']:12s} {status_icon} ({tracked})")
-        print(f"  {a['description']}")
-        print(f"  Local count: {a['local_count']} (expected ~{a['expected_count']})")
-        if a["local_count"] != a["expected_count"]:
-            delta = a["local_count"] - a["expected_count"]
-            print(f"  Delta: {'+' if delta > 0 else ''}{delta}")
-        if a["skills"]:
-            print(f"  Skills: {', '.join(a['skills'])}")
+    print(f"\n[MAIN] {main['name']}")
+    print(f"  SKILL.md: {'OK' if main['exists'] else 'MISSING'} ({main['size_lines']} lines)")
 
-        if "global_count" in a:
-            sync_icon = "OK" if a["in_sync"] else "DRIFT"
-            print(f"  Global count: {a['global_count']} | Status: {sync_icon}")
-            if a["only_local"]:
-                print(f"  Only local: {', '.join(a['only_local'])}")
-            if a["only_global"]:
-                print(f"  Only global: {', '.join(a['only_global'])}")
+    print("\n[LOCAL ZONES]")
+    for z in local:
+        icon = "[OK]" if z["status"] == "OK" else "[--]"
+        print(f"  {icon} {z['zone']:12s} {z['count']} skills — {z['description']}")
+        if z["skills"]:
+            print(f"      {', '.join(z['skills'])}")
 
-        total_local += a["local_count"]
+    print("\n[COMPANION REPOS]")
+    for c in companions:
+        icon = "[INSTALLED]" if c["installed"] else "[NOT INSTALLED]"
+        print(f"  {icon} {c['companion']:12s} {c['count']} skills")
+        print(f"      URL: {c['url']}")
+        if not c["installed"]:
+            print(f"      Install: bash scripts/install-companion.sh {c['companion']}")
 
     print("\n" + "=" * 60)
-    print(f"TOTAL: {total_local} skills across {len(audits)} zones")
-    print("=" * 60)
 
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--zone", help="Audit specific zone only")
-    p.add_argument("--diff-global", action="store_true", help="Compare with global locations")
-    p.add_argument("--json", action="store_true", help="JSON output")
+    p.add_argument("--json", action="store_true")
     args = p.parse_args()
 
-    manifest = load_manifest()
-    zones = manifest["zones"]
-
-    if args.zone:
-        if args.zone not in zones:
-            print(f"ERROR: unknown zone '{args.zone}'. Valid: {list(zones.keys())}")
-            sys.exit(1)
-        audits = [audit_zone(args.zone, zones[args.zone], args.diff_global)]
-    else:
-        audits = [audit_zone(name, cfg, args.diff_global) for name, cfg in zones.items()]
+    mf = load_manifest()
+    main_skill = audit_main_skill()
+    local = [audit_local_zone(n, c) for n, c in mf["local_zones"].items()]
+    companions = [audit_companion(n, c) for n, c in mf["companion_repos"].items()]
 
     if args.json:
-        print(json.dumps(audits, indent=2, ensure_ascii=False))
+        print(json.dumps({"main": main_skill, "local_zones": local, "companions": companions}, indent=2, ensure_ascii=False))
     else:
-        print_human(audits)
-
-    # Save audit timestamp
-    (PROJECT_ROOT / "scripts" / ".last-audit.txt").write_text(
-        datetime.now(timezone.utc).isoformat(), encoding="utf-8"
-    )
+        print_human(main_skill, local, companions)
 
 
 if __name__ == "__main__":

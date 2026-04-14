@@ -17,10 +17,14 @@ test_output/
 *.tmp
 *.bak
 
-# 4-zone skill library — TẤT CẢ tracked in git (clone xong dùng ngay, không cần sync)
-# vci/ + xia/ + claudekit/ + others/ — all committed
+# Companion zones (install riêng — xem scripts/install-companion.sh)
+# KHÔNG track trong repo này để giữ repo lean (~5MB).
+# User clone các repo riêng: skills-claudekit, skills-xia, skills-others
+.claude/skills/claudekit/
+.claude/skills/xia/
+.claude/skills/others/
 
-# Sync state (regenerated each sync — chỉ dùng khi update từ upstream)
+# Sync state
 scripts/.sync-state.json
 scripts/.last-audit.txt
 .xia/

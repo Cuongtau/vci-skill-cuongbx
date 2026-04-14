@@ -119,37 +119,24 @@ vci-skill-cuongbx/                   Repo = skill installable
 │   └── templates/
 └── .claude/                          ⚠️ Companion skills (NOT part of main skill install)
     └── skills/
-        ├── vci/                     🟦 11 SDLC supporting skills
-        ├── claudekit/                🟩 ~1389 core dev skills
-        ├── xia/                      🟣 1 feature heist skill
-        └── others/                   🟠 9 UI/design skills
+        └── vci/                     🟦 11 SDLC supporting skills (tracked)
 ```
 
 ---
 
-## 🧩 Companion Skills (bundled, ALL tracked in git)
+## 🧩 Companion Zones (cài riêng — repo tách biệt)
 
-Khi clone repo này, anh có **4 zones** với **~1410 skills** trong `.claude/skills/` — **tất cả tracked, dùng ngay sau clone, không cần sync**. Repo size ~345MB.
+Repo này **lean**: chỉ giữ main skill + 1 zone support `vci/`. Các zone khác tách thành **repo riêng** để user cài theo nhu cầu, tránh bloat.
 
-### 🟦 Zone `vci/` — 11 SDLC supporting skills
+| Zone | Skills | Repo riêng | Install |
+|---|---|---|---|
+| 🟩 **claudekit** | ~1389 core dev | `skills-claudekit` | `bash scripts/install-companion.sh claudekit` |
+| 🟣 **xia** | 1 feature heist | `skills-xia` | `bash scripts/install-companion.sh xia` |
+| 🟠 **others** | 9 UI/design | `skills-others` | `bash scripts/install-companion.sh others` |
 
-`skill-creator-ultra` · `business-analyst` · `product-manager-toolkit` · `plan-writing` · `api-documentation-generator` · `docs-architect` · `mermaid-expert` · `acceptance-orchestrator` · `spec-to-code-compliance` · `test-automator` · `brainstorming`
+Install tất cả: `bash scripts/install-companion.sh all`
 
-### 🟩 Zone `claudekit/` — ~1389 core dev skills
-
-`ck-plan`, `ck-cook`, `ck-debug`, `code-review`, `commit`, `simplify-code`, `debugger`, `research`, `scout`, `docs-seeker`, `repomix`, `tdd-workflow`, v.v.
-
-Update từ upstream: `bash scripts/sync-from-global.sh --zone claudekit`
-
-### 🟣 Zone `xia/` — Feature heist skill
-
-Port/copy/adapt tính năng từ external GitHub repo với 4 modes (`--compare`/`--copy`/`--improve`/`--port`).
-
-### 🟠 Zone `others/` — UI/Design (Antigravity)
-
-9 skills: `frontend-design`, `radix-ui-design-system`, `react-ui-patterns`, `ui-ux-designer`, `design-orchestration`, `web-design-guidelines`, v.v.
-
-Update từ upstream: `bash scripts/sync-from-global.sh --zone others`
+Windows: dùng `scripts/install-companion.ps1` với `-Target claudekit|xia|others|all`.
 
 📚 **Chi tiết:** [.claude/skills/README.md](.claude/skills/README.md)
 
