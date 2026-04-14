@@ -1,4 +1,4 @@
-# 🟦 Zone: vci-cuongbx
+# 🟦 Zone: vci (SDLC)
 
 Skills hỗ trợ **toàn bộ SDLC** của team phát triển sản phẩm — BA, Dev, QA, Tester, PM, Tech Lead.
 

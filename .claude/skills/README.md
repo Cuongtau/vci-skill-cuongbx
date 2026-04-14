@@ -1,139 +1,119 @@
 # Skills Library — vci-skill-cuongbx
 
-Thư viện skill của project, tổ chức thành **3 vùng** (zone) rõ ràng theo mục đích:
+Thư viện skill của project, tổ chức thành **4 vùng** (zone) rõ ràng theo mục đích:
 
 ```
 .claude/skills/
-├── vci-cuongbx/        🟦 11 skills  — hỗ trợ phát triển sản phẩm theo team (tracked in git)
-├── claudekit/          🟩 179 skills — full ClaudeKit Engineer catalog (325MB, .gitignored)
-└── xia/                🟣 1 skill    — feature heist (port/copy/adapt từ external repo)
+├── vci/         🟦 11  skills  — SDLC (BA/Dev/QA/PM/design)
+├── claudekit/   🟩 ~1389 skills — full ClaudeKit Engineer catalog
+├── xia/         🟣 1   skill   — feature heist (port từ external repo)
+└── others/      🟠 9   skills  — Antigravity UI/design skills
 ```
 
-Tổng cộng **191 skills**, tương thích đa IDE (Claude Code, Antigravity, Cursor, Kilo, Codex, OpenCode, Windsurf, Cline…).
+Tổng cộng **~1410 skills**, **TẤT CẢ tracked in git** — clone về là dùng ngay, không cần sync. Tương thích đa IDE (Claude Code, Antigravity, Cursor, Kilo, Codex, OpenCode, Windsurf, Cline, GitHub Copilot).
 
-> **Note:** `claudekit/` chứa full 179 skills của ClaudeKit Engineer (~325MB) — physically trên disk để dùng, nhưng **không commit vào git** (đã add vào `.gitignore`). Trên máy khác cần chạy `./.claude/skills/restore-claudekit.sh` để clone lại từ `~/.claude/skills/`.
+> **Repo size:** ~345MB. Clone lần đầu hơi lâu (3-10 min tùy mạng), nhưng sau đó dùng offline thoải mái. Sync scripts chỉ dùng khi muốn **update từ upstream** (pull bản mới của claudekit/others).
 
-> Skills là folder chứa instructions, scripts và resources mà AI load động để handle task chuyên biệt. Xem chi tiết: [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
+> Skills là folder chứa instructions, scripts và resources mà AI load động để handle task chuyên biệt. Xem [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills).
 
 ---
 
-## 🟦 Zone `vci-cuongbx/` — Product Dev Team
+## Sync direction matrix
 
-Skills phục vụ SDLC end-to-end: BA → Dev → QA → PM. Xem [vci-cuongbx/README.md](./vci-cuongbx/README.md).
+| Zone | Direction | Git tracked | Source upstream |
+|---|---|---|---|
+| **vci** | bidirectional | ✅ yes | `~/.claude/skills/<each-skill>/` |
+| **claudekit** | pull-only | ✅ yes | `~/.claude/skills/` (full catalog) |
+| **xia** | bidirectional | ✅ yes | `~/.claude/skills/xia/` |
+| **others** | pull-only | ✅ yes | `~/.gemini/antigravity/skills/` |
 
-| Skill | Vai trò | Dùng ở mode nào |
+- **bidirectional**: Sửa local → push lên global qua `sync-to-global.sh` để mọi project dùng bản mới.
+- **pull-only**: Source-of-truth ở upstream — chỉ pull về (khi upstream cập nhật), không push.
+
+---
+
+## 🟦 Zone `vci/` — Product Dev Team (SDLC)
+
+Skills phục vụ SDLC end-to-end: BA → Dev → QA → PM. Xem [vci/README.md](./vci/README.md).
+
+| Skill | Vai trò | Mode liên quan |
 |---|---|---|
-| `skill-creator-ultra` | Meta — tạo/improve skill | Bảo trì skill `vci-skill-cuongbx` |
-| `business-analyst` | BA | Mode 1, 2, 3 (Generate, Structure, Update PRD) |
-| `product-manager-toolkit` | PM | Mode 7, 8, 9 (Summary, Track, Report) |
-| `plan-writing` | Plan | Plans/, implementation roadmap |
-| `api-documentation-generator` | Dev | Mode 5A (Backend API docs) |
-| `docs-architect` | Docs | Cấu trúc tổng thể `docs/` |
-| `mermaid-expert` | Diagram | Mode 1 (State Machine, ERD, Flow) |
-| `acceptance-orchestrator` | QA | Mode 6 (AC + test flows) |
-| `spec-to-code-compliance` | Tech Lead | Mode 4 (Audit — spec ↔ code) |
-| `test-automator` | QA | Mode 6 (Playwright, k6 skeleton) |
+| `skill-creator-ultra` | Meta — tạo/improve skill | Maintenance |
+| `business-analyst` | BA | Mode 1, 2, 3 |
+| `product-manager-toolkit` | PM | Mode 7, 8, 9 |
+| `plan-writing` | Plan | Plans + roadmap |
+| `api-documentation-generator` | Dev | Mode 5A |
+| `docs-architect` | Docs | Cấu trúc `docs/` |
+| `mermaid-expert` | Diagram | Mode 1 |
+| `acceptance-orchestrator` | QA | Mode 6 |
+| `spec-to-code-compliance` | Tech Lead | Mode 4 |
+| `test-automator` | QA | Mode 6 |
 | `brainstorming` | BA/PM | Phase 1 ideation |
 
 ## 🟩 Zone `claudekit/` — Core Dev Tools
 
-Skills từ ClaudeKit Engineer — dùng chung cho mọi task dev. Xem [claudekit/README.md](./claudekit/README.md).
+Catalog đầy đủ của ClaudeKit Engineer (~1389 skills). Truy cập qua `/claudekit <skill-name>` slash command. Xem `.claude/commands/claudekit.md`.
 
-| Skill | Mục đích |
-|---|---|
-| `ck-plan` | Planning workflow (research → plan → phases) |
-| `ck-debug` | Systematic debugging |
-| `ck-loop` | Autonomous loop (long-running tasks) |
-| `code-review` | Comprehensive code review |
-| `code-reviewer` | Lightweight review |
-| `docs` | Docs management (init/update/summarize) |
-| `docs-seeker` | Fetch external docs (Context7) |
-| `research` | Deep research |
-| `scout` | External/internal scouting |
-| `repomix` | Repo packaging |
-| `template-skill` | Skill scaffold template |
-| `commit` | Conventional commits + PR flow |
-| `simplify-code` | Code simplification |
-| `debugger` | Debug agent |
-| `systematic-debugging` | Debug methodology |
-| `test-driven-development` | TDD workflow |
+Notable: `ck-plan`, `ck-debug`, `ck-loop`, `code-review`, `commit`, `simplify-code`, `tdd-workflow`, `docs-seeker`, `repomix`...
+
+## 🟣 Zone `xia/` — Feature Heist
+
+Single skill `xia` với 4 modes (`--compare` / `--copy` / `--improve` / `--port`) + 6-step workflow. Xem [xia/README.md](./xia/README.md).
+
+## 🟠 Zone `others/` — UI/Design (Antigravity)
+
+10 skills về UI/UX design, frontend, design systems từ Antigravity:
+
+`design-orchestration`, `design-spells`, `frontend-design`, `radix-ui-design-system`, `react-ui-patterns`, `superpowers`, `ui-skills`, `ui-ux-designer`, `ui-ux-pro-max-skill`, `web-design-guidelines`.
 
 ---
 
-## 🟣 Zone `xia/` — Feature Heist Tools
+## 🔗 Cross-zone composition
 
-Skills port/copy/adapt feature từ external GitHub repo về project local. Xem [xia/README.md](./xia/README.md).
-
-| Skill | Mục đích |
-|---|---|
-| `xia` | 4 modes (`--compare` / `--copy` / `--improve` / `--port`) + 6-step workflow (Recon → Map → Analyze → Challenge → Plan → Deliver) với license check, attribution tự động, manifest tracking |
-
----
-
-## 🔗 Cross-zone Integration — Compose skills across zones
-
-Skills **không tự invoke skill khác** — user phải gọi explicit. Bảng dưới gợi ý khi nào compose từ zone này sang zone khác:
+Skills **không tự invoke skill khác** — user phải gọi explicit. Bảng dưới gợi ý compose:
 
 ```
-🟦 vci-cuongbx (SDLC)        🟩 claudekit (core dev)        🟣 xia (feature heist)
-     │                              │                              │
-     │  Mode 1 Generate ────────► mermaid-expert (vci)            │
-     │                         brainstorming (vci)                │
-     │                         ck:plan (ck) ─── if complex plan    │
-     │  Mode 4 Audit ──────────► code-review (ck)                 │
-     │                         ck:security (ck) ── STRIDE+OWASP   │
-     │  Mode 5A/B Dev Guide ───► api-documentation-gen (vci)      │
-     │                         xia --port (xia) ─── port lib ─────┤
-     │  Mode 6 Test Gen ───────► test-automator (vci)             │
-     │                         acceptance-orchestrator (vci)      │
-     │                         tdd-workflow (ck)                  │
-     │  Mode 8/9 PM ───────────► ck:loop (ck) ── auto weekly       │
-     │                                                              │
-     │◄─── xia post-Deliver: Mode 5 Dev Guide + Mode 6 Test Gen ───┤
-     │                                                              │
-     └──────── After all: code-review → simplify-code → commit ────┘
-                          (all from claudekit zone)
+🟦 vci (SDLC)    🟩 claudekit (core)    🟣 xia (heist)    🟠 others (UI)
+   │                  │                      │                 │
+   │  Mode 1  ──► mermaid-expert (vci)                          │
+   │            brainstorming (vci)                             │
+   │            ck:plan (ck) ── if complex                      │
+   │  Mode 4  ──► code-review (ck)                              │
+   │            ck:security (ck)                                │
+   │  Mode 5A ──► api-documentation-gen (vci)                   │
+   │            xia --port (xia) ─ port lib                     │
+   │  Mode 5B ──► frontend-design (others)                      │
+   │            ui-ux-designer (others)                         │
+   │  Mode 6  ──► test-automator (vci)                          │
+   │            tdd-workflow (ck)                               │
+   │  Mode 10 ──► radix-ui-design-system (others)               │
+   │            react-ui-patterns (others)                      │
+   │                                                              │
+   └── After all: code-review → simplify-code → commit (ck) ────┘
 ```
 
-### Workflow mẫu end-to-end
+📚 **Full cross-zone map:** [../../references/cross-zone-suggestions.md](../../references/cross-zone-suggestions.md)
 
-**Scenario:** Team cần thêm rate limiter vào feature mới.
-
-```
-1. /brainstorming rate limiter           (vci: brainstorming)
-2. Tạo spec IMS_NK_02                    (vci: Mode 1 Generate) ─── compose mermaid-expert
-3. /xia --compare {ref-repo}             (xia: compare mode)
-4. /xia --port {ref-repo} rate-limiter   (xia --port → delegate ck:plan + ck:cook)
-5. Dev guide backend IMS_NK_02           (vci: Mode 5A) ─── compose api-documentation-generator
-6. Sinh test cases                       (vci: Mode 6) ─── compose test-automator
-7. Audit spec ↔ code                     (vci: Mode 4) ─── compose ck:security
-8. /code-review                           (ck: code-review) ─── adversarial
-9. /commit                                (ck: commit) ─── conventional commit + PR
-10. Mode 8/9 Track + Report              (vci: PM zone) ─── compose ck:loop weekly
-```
-
-**Kết quả:** 7 skills từ 3 zones, ~2 giờ thay vì 1 tuần thủ công.
-
-📚 **Full cross-zone map + anti-patterns:** [../../references/cross-zone-suggestions.md](../../references/cross-zone-suggestions.md)
-
-### Quan trọng: Anti-duplication
+### Anti-duplication
 
 - ❌ Gọi `/ck:brainstorm` từ trong `/xia` — phá phase ownership
-- ❌ Dùng Mode 1 + business-analyst cùng lúc — Mode 1 đã include BA
-- ❌ `xia --compare` + Mode 4 cùng lúc — mục đích khác nhau (external vs local)
-- ❌ Mode 10 Mockup khi chưa có Level 4 spec — mockup fail validation
+- ❌ Mode 1 + `business-analyst` cùng feature — Mode 1 đã include BA
+- ❌ `xia --compare` + Mode 4 cùng feature — khác scope
+- ❌ Mode 10 Mockup khi spec chưa có Level 4
+
+📚 **Chi tiết:** [../../references/anti-duplication-guards.md](../../references/anti-duplication-guards.md)
 
 ---
 
 ## Cài đặt / Sync sang IDE khác
 
-Skill format (`SKILL.md` + frontmatter `name:` + `description:`) đã chuẩn Anthropic → **hoạt động trực tiếp** ở:
+Skill format chuẩn Anthropic → hoạt động trực tiếp ở:
 
-| IDE / Tool | Đường dẫn install |
+| IDE | Đường dẫn install |
 |---|---|
-| Claude Code | `.claude/skills/` (đã có) hoặc `~/.claude/skills/` |
-| Antigravity (Gemini) | `.gemini/skills/` hoặc `~/.gemini/antigravity/skills/` |
-| Cursor | `.cursor/skills/` (hoặc convert sang `.cursor/rules/`) |
+| Claude Code | `.claude/skills/` hoặc `~/.claude/skills/` |
+| Antigravity | `.gemini/skills/` hoặc `~/.gemini/antigravity/skills/` |
+| Cursor | `.cursor/skills/` |
 | Kilo Code | `.kilo/skills/` |
 | Codex CLI | `.codex/skills/` |
 | OpenCode | `.opencode/skills/` |
@@ -141,29 +121,26 @@ Skill format (`SKILL.md` + frontmatter `name:` + `description:`) đã chuẩn An
 | Cline | `.cline/skills/` |
 | GitHub Copilot | `.github/copilot/skills/` |
 
-### Sync tự động
-
-Dùng script ở `.claude/skills/`:
+### Sync scripts
 
 ```bash
-# Windows PowerShell
-./.claude/skills/install.ps1 -Target antigravity
-./.claude/skills/install.ps1 -Target cursor -Global
+# Pull from global locations into project zones
+bash scripts/sync-from-global.sh                    # all
+bash scripts/sync-from-global.sh --zone claudekit   # specific
 
-# macOS/Linux
-./.claude/skills/install.sh --target kilo
-./.claude/skills/install.sh --target antigravity --global
+# Push bidirectional zones (vci, xia) → global
+bash scripts/sync-to-global.sh --dry-run
+
+# Install skills to other IDEs (symlink/junction)
+bash scripts/install-all-ides.sh                    # all IDEs
+bash scripts/install-all-ides.sh --target cursor    # specific
+
+# Audit zones — count, diff with global
+python scripts/audit-skills.py
+python scripts/audit-skills.py --diff-global
 ```
 
-Script dùng **symlink/junction** — sửa 1 chỗ, sync mọi IDE. Xem `install.ps1`/`install.sh` cho options đầy đủ.
-
-### Manual copy (fallback nếu không muốn symlink)
-
-```bash
-# Copy toàn bộ 2 zones sang IDE khác
-cp -r .claude/skills/vci-cuongbx  ~/.cursor/skills/
-cp -r .claude/skills/claudekit    ~/.cursor/skills/
-```
+Windows: dùng `.ps1` thay vì `.sh`.
 
 ---
 
@@ -172,10 +149,10 @@ cp -r .claude/skills/claudekit    ~/.cursor/skills/
 Claude/Gemini tự kích hoạt skill dựa trên `description:` field trong frontmatter SKILL.md. Để skill trigger đúng:
 
 1. Description phải "pushy" — cover nhiều cách user hỏi
-2. Name kebab-case, không có "and" (atomic logic)
+2. Name kebab-case, atomic logic (không có "and")
 3. 4 core sections: Goal / Instructions / Examples / Constraints
 
-Dùng `skill-creator-ultra` (trong zone vci-cuongbx) để audit + improve các skill.
+Dùng `skill-creator-ultra` (zone `vci`) để audit + improve các skill.
 
 ---
 
@@ -183,7 +160,9 @@ Dùng `skill-creator-ultra` (trong zone vci-cuongbx) để audit + improve các 
 
 | Version | Date | Changes |
 |---|---|---|
-| 2.1.0 | 2026-04-14 | Tách 2 zones (vci-cuongbx + claudekit), thêm 16 skills |
+| 2.5.0 | 2026-04-14 | 4 zones (vci + claudekit + xia + others), unified manifest + sync scripts, cross-IDE installer |
+| 2.4.0 | 2026-04-14 | Anti-duplication guards + enterprise workflow |
+| 2.1.0 | 2026-04-14 | 2 zones split |
 | 2.0.0 | 2026-04-13 | Merge 10 modes PRD/Spec |
 
 <!-- Generated by Skill Creator Ultra v1.0 -->

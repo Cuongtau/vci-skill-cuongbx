@@ -290,14 +290,14 @@ Risk score: {Low/Medium/High}
 
 ## 🛡️ Anti-duplication guards
 
-### `/xia --compare` vs `vci-cuongbx Mode 4 Audit` — DISAMBIGUATION
+### `/xia --compare` vs `vci Mode 4 Audit` — DISAMBIGUATION
 
 **Khi nào dùng `/xia --compare`**:
 - Có **external GitHub repo URL** làm reference
 - Muốn so sánh approach của project với repo khác
 - Mục đích: research, architecture review, pre-port decision
 
-**Khi nào dùng `Mode 4 Audit` (vci-cuongbx)**:
+**Khi nào dùng `Mode 4 Audit` (vci)**:
 - Chỉ có **local spec + local source code**
 - Mục đích: verify spec ↔ code consistency
 - Output: Gap Report + Deviation Report + RTM

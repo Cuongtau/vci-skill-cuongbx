@@ -1,0 +1,64 @@
+{
+  "$schema": "https://example.com/skills-manifest-v1.json",
+  "version": "1.0.0",
+  "project": "vci-skill-cuongbx",
+  "description": "Unified skill library — 4 zones with bidirectional sync",
+  "zones": {
+    "vci": {
+      "description": "VCI SDLC supporting skills (BA/Dev/QA/PM/Design)",
+      "path": ".claude/skills/vci",
+      "source": "local",
+      "global_path": "~/.claude/skills",
+      "sync_direction": "bidirectional",
+      "git_tracked": true,
+      "skills_count": 11,
+      "owner": "cuongbx"
+    },
+    "claudekit": {
+      "description": "ClaudeKit Engineer core dev tools",
+      "path": ".claude/skills/claudekit",
+      "source": "global",
+      "global_path": "~/.claude/skills",
+      "sync_direction": "pull-only",
+      "git_tracked": true,
+      "skills_count": 1389,
+      "owner": "claudekit"
+    },
+    "xia": {
+      "description": "Feature heist — port from external repos",
+      "path": ".claude/skills/xia",
+      "source": "local",
+      "global_path": "~/.claude/skills",
+      "sync_direction": "bidirectional",
+      "git_tracked": true,
+      "skills_count": 1,
+      "owner": "cuongbx"
+    },
+    "others": {
+      "description": "Antigravity design + UI skills",
+      "path": ".claude/skills/others",
+      "source": "global",
+      "global_path": "~/.gemini/antigravity/skills",
+      "sync_direction": "pull-only",
+      "git_tracked": true,
+      "skills_count": 9,
+      "owner": "antigravity",
+      "exclude_patterns": ["antigravity-awesome-skills", "skill-creator-ultra", "vci-skill-cuongbx"]
+    }
+  },
+  "ide_install_paths": {
+    "claude-code": ".claude/skills",
+    "claude-code-global": "~/.claude/skills",
+    "antigravity": ".gemini/skills",
+    "antigravity-global": "~/.gemini/antigravity/skills",
+    "cursor": ".cursor/skills",
+    "kilo": ".kilo/skills",
+    "codex": ".codex/skills",
+    "opencode": ".opencode/skills",
+    "windsurf": ".windsurf/skills",
+    "cline": ".cline/skills",
+    "github-copilot": ".github/copilot/skills"
+  },
+  "last_synced": null,
+  "sync_history": []
+}

@@ -17,7 +17,10 @@ test_output/
 *.tmp
 *.bak
 
-# Claudekit zone — 179 skills, ~325MB local library (physically on disk, excluded from git)
-# Tracked skills live in .claude/skills/vci-cuongbx/ only.
-# To restore claudekit zone on clone: ck skills --list to discover + copy from ~/.claude/skills/
-.claude/skills/claudekit/
+# 4-zone skill library — TẤT CẢ tracked in git (clone xong dùng ngay, không cần sync)
+# vci/ + xia/ + claudekit/ + others/ — all committed
+
+# Sync state (regenerated each sync — chỉ dùng khi update từ upstream)
+scripts/.sync-state.json
+scripts/.last-audit.txt
+.xia/

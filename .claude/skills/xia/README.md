@@ -21,7 +21,7 @@ Skills ở đây đều share nguyên tắc:
 
 ## Tại sao tách zone riêng?
 
-`/xia` không fit vào `vci-cuongbx/` (BA/Dev/QA/PM workflow) hoặc `claudekit/` (core dev tools). Nó là:
+`/xia` không fit vào `vci/` (BA/Dev/QA/PM workflow) hoặc `claudekit/` (core dev tools). Nó là:
 
 - **Orchestrator nhẹ** — compose `ck:repomix`, `ck:research`, `ck:scout`, `ck:sequential-thinking`, `ck:security`, `ck:plan`, `ck:cook`
 - **Cross-cutting** — ảnh hưởng mọi layer của project khi port
@@ -38,7 +38,7 @@ Tách thành zone `xia/` cho phép expand với related skills sau:
 |---|---|
 | `ck:repomix`, `ck:scout`, `ck:research`, `ck:docs-seeker` | `claudekit/` |
 | `ck:sequential-thinking`, `ck:security`, `ck:plan`, `ck:cook` | `claudekit/` |
-| `spec-to-code-compliance`, `test-automator`, `plan-writing` | `vci-cuongbx/` |
+| `spec-to-code-compliance`, `test-automator`, `plan-writing` | `vci/` |
 | `code-review`, `commit`, `debugger` | `claudekit/` |
 
 `/xia` là **thin orchestrator** — không reinvent, dùng skills có sẵn.

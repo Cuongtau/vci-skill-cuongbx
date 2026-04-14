@@ -1,7 +1,7 @@
 # Cross-zone Suggestions — Compose skill từ các zones
 
 Project có **3 zones**:
-- 🟦 **vci-cuongbx** — SDLC team (BA/Dev/QA/PM + design)
+- 🟦 **vci** — SDLC team (BA/Dev/QA/PM + design)
 - 🟩 **claudekit** — Core dev tools (ck:plan, ck:cook, ck:debug, ck:security...)
 - 🟣 **xia** — Feature heist (port từ external repo)
 
@@ -15,10 +15,10 @@ Skill **không tự động invoke** skill khác — user phải gọi explicit.
 
 | Tình huống | Compose với | Zone |
 |---|---|---|
-| Cần vẽ diagram phức tạp (state machine, ERD, flow) | `mermaid-expert` | vci-cuongbx |
-| Ideation trước khi viết spec | `brainstorming` | vci-cuongbx |
+| Cần vẽ diagram phức tạp (state machine, ERD, flow) | `mermaid-expert` | vci |
+| Ideation trước khi viết spec | `brainstorming` | vci |
 | Feature lấy cảm hứng từ open source repo | `xia --compare` hoặc `xia --port` | xia |
-| BA chưa rõ business rules | `business-analyst` | vci-cuongbx |
+| BA chưa rõ business rules | `business-analyst` | vci |
 | Sau khi Mode 1 xong → cần plan implement lớn | `ck:plan --hard` | claudekit |
 
 ### Mode 2 Structure
@@ -26,20 +26,20 @@ Skill **không tự động invoke** skill khác — user phải gọi explicit.
 | Tình huống | Compose với | Zone |
 |---|---|---|
 | Notes meeting đa ngôn ngữ, cần dịch nghĩa trước | `ck:research` | claudekit |
-| Notes có nhiều ý tưởng rời → cần ideation tổng hợp | `brainstorming` | vci-cuongbx |
+| Notes có nhiều ý tưởng rời → cần ideation tổng hợp | `brainstorming` | vci |
 
 ### Mode 3 Update
 
 | Tình huống | Compose với | Zone |
 |---|---|---|
 | Update liên quan scope CR lớn → cần plan lại | `ck:plan` | claudekit |
-| Sau update → audit lại spec | `spec-to-code-compliance` | vci-cuongbx |
+| Sau update → audit lại spec | `spec-to-code-compliance` | vci |
 
 ### Mode 4 Audit
 
 | Tình huống | Compose với | Zone |
 |---|---|---|
-| Deep code-spec comparison | `spec-to-code-compliance` | vci-cuongbx |
+| Deep code-spec comparison | `spec-to-code-compliance` | vci |
 | Security compliance check | `ck:security` (STRIDE+OWASP) | claudekit |
 | Full adversarial code review | `code-review` (claudekit) hoặc `code-reviewer` | claudekit |
 | Pre-push audit | `codebase-audit-pre-push` | claudekit |
@@ -52,8 +52,8 @@ Skill **không tự động invoke** skill khác — user phải gọi explicit.
 
 | Tình huống | Compose với | Zone |
 |---|---|---|
-| Cần sinh OpenAPI spec | `api-documentation-generator` | vci-cuongbx |
-| API docs chi tiết | `api-documentation`, `api-documenter` | vci-cuongbx |
+| Cần sinh OpenAPI spec | `api-documentation-generator` | vci |
+| API docs chi tiết | `api-documentation`, `api-documenter` | vci |
 | Implementation plan phức tạp >5 phases | `ck:plan --hard --parallel` | claudekit |
 | Deploy backend sau impl | `ck:cook` → `devops-deploy` | claudekit |
 | Port utility từ open source (rate limiter, JWT helper, etc.) | `xia --port` hoặc `xia --improve` | xia |
@@ -75,8 +75,8 @@ Skill **không tự động invoke** skill khác — user phải gọi explicit.
 
 | Tình huống | Compose với | Zone |
 |---|---|---|
-| Full acceptance criteria pipeline | `acceptance-orchestrator` | vci-cuongbx |
-| Automation skeleton chi tiết hơn | `test-automator` | vci-cuongbx |
+| Full acceptance criteria pipeline | `acceptance-orchestrator` | vci |
+| Automation skeleton chi tiết hơn | `test-automator` | vci |
 | TDD cycle (red/green/refactor) | `tdd-workflow`, `tdd-workflows-tdd-cycle` | claudekit |
 | Security test deep | `security-scanning-security-sast` | claudekit |
 | Performance test | `k6-load-testing`, `performance-profiling` | claudekit |
@@ -139,7 +139,7 @@ Mode 6 (QA) done ────┘                                 (claudekit)    
 
 ```
 > /brainstorming rate limiter cho batch nhập kho
-→ brainstorming skill (vci-cuongbx) đưa ra 3 approaches
+→ brainstorming skill (vci) đưa ra 3 approaches
 
 > Tạo spec IMS_NK_02 cho batch nhập kho với rate limit
 → Mode 1 Generate — sinh spec 4 level với BR rate limit

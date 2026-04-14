@@ -68,7 +68,7 @@ User không rõ                                            → Hỏi:
 **Reason:** `/ck:brainstorm` tạo separate planning handoff → phá phase ownership.
 
 **Mode 1:** Đã include ideation inside. Alternative:
-- Dùng `brainstorming` skill (vci-cuongbx) **TRƯỚC** Mode 1 để ideation
+- Dùng `brainstorming` skill (vci) **TRƯỚC** Mode 1 để ideation
 - Sau khi có ideation output, chạy Mode 1
 
 **`/xia`:** Phase 4 Challenge tự handle decision matrix. Alternative:
@@ -120,7 +120,7 @@ Anti-duplication guards ở **REFUSE** level trừ khi user explicit override.
    → Use `brainstorming` skill (standalone)
 
 2. User: "Tạo spec IMS_NK_01 với output từ brainstorm trên"
-   → Use Mode 1 Generate (vci-cuongbx)
+   → Use Mode 1 Generate (vci)
 
 3. User: "Tạo mockup màn nhập kho"
    → Mode 10 pre-flight check → spec có Level 4 ✅ → proceed

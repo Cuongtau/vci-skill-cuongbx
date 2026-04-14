@@ -106,7 +106,7 @@ Idea ──────────┘                       │ Summary  M10 Mo
 
 # 🔗 Gợi ý Cross-zone
 
-3 zones: **vci-cuongbx** (SDLC) · **claudekit** (core dev) · **xia** (feature heist).
+4 zones: **vci** (SDLC) · **claudekit** (core dev) · **xia** (feature heist) · **others** (UI/design).
 
 - **Mode 1/2 PRD** → `mermaid-expert`, `brainstorming` · **xia --compare** nếu ref repo
 - **Mode 4 Audit** → `spec-to-code-compliance`, `ck:security`, `code-review`

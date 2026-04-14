@@ -119,30 +119,37 @@ vci-skill-cuongbx/                   Repo = skill installable
 │   └── templates/
 └── .claude/                          ⚠️ Companion skills (NOT part of main skill install)
     └── skills/
-        ├── vci-cuongbx/             🟦 11 supporting skills
-        ├── claudekit/                🟩 179 core dev skills (.gitignored)
-        └── xia/                      🟣 Feature heist skill
+        ├── vci/                     🟦 11 SDLC supporting skills
+        ├── claudekit/                🟩 ~1389 core dev skills
+        ├── xia/                      🟣 1 feature heist skill
+        └── others/                   🟠 9 UI/design skills
 ```
 
 ---
 
-## 🧩 Companion Skills (bundled nhưng tách biệt)
+## 🧩 Companion Skills (bundled, ALL tracked in git)
 
-Khi clone repo này, anh có thêm **3 zones bonus** trong `.claude/skills/`:
+Khi clone repo này, anh có **4 zones** với **~1410 skills** trong `.claude/skills/` — **tất cả tracked, dùng ngay sau clone, không cần sync**. Repo size ~345MB.
 
-### 🟦 Zone `vci-cuongbx/` — 11 SDLC supporting skills
+### 🟦 Zone `vci/` — 11 SDLC supporting skills
 
 `skill-creator-ultra` · `business-analyst` · `product-manager-toolkit` · `plan-writing` · `api-documentation-generator` · `docs-architect` · `mermaid-expert` · `acceptance-orchestrator` · `spec-to-code-compliance` · `test-automator` · `brainstorming`
 
-### 🟩 Zone `claudekit/` — 179 core dev skills (gitignored)
+### 🟩 Zone `claudekit/` — ~1389 core dev skills
 
-`ck-plan`, `ck-cook`, `ck-debug`, `code-review`, `commit`, `simplify-code`, `debugger`, `research`, `scout`, `docs-seeker`, `repomix`, v.v.
+`ck-plan`, `ck-cook`, `ck-debug`, `code-review`, `commit`, `simplify-code`, `debugger`, `research`, `scout`, `docs-seeker`, `repomix`, `tdd-workflow`, v.v.
 
-Restore: `./.claude/skills/restore-claudekit.sh` (copy từ `~/.claude/skills/`)
+Update từ upstream: `bash scripts/sync-from-global.sh --zone claudekit`
 
 ### 🟣 Zone `xia/` — Feature heist skill
 
 Port/copy/adapt tính năng từ external GitHub repo với 4 modes (`--compare`/`--copy`/`--improve`/`--port`).
+
+### 🟠 Zone `others/` — UI/Design (Antigravity)
+
+9 skills: `frontend-design`, `radix-ui-design-system`, `react-ui-patterns`, `ui-ux-designer`, `design-orchestration`, `web-design-guidelines`, v.v.
+
+Update từ upstream: `bash scripts/sync-from-global.sh --zone others`
 
 📚 **Chi tiết:** [.claude/skills/README.md](.claude/skills/README.md)
 
@@ -204,7 +211,7 @@ Idea ──────────┘                       │ Summary  M10 Mo
 **Scenario:** Team cần thêm rate limiter vào feature nhập kho batch.
 
 ```
-1. /brainstorming rate limiter                    (vci-cuongbx)
+1. /brainstorming rate limiter                    (vci)
 2. Tạo spec IMS_NK_02                             (Mode 1 + mermaid-expert)
 3. /xia --compare github.com/tj/node-ratelimiter  (xia)
 4. /xia --port feature                             (xia → ck:plan + ck:cook)
@@ -264,7 +271,7 @@ Idea ──────────┘                       │ Summary  M10 Mo
 
 1. Fork repo
 2. Edit `SKILL.md` hoặc files trong `references/`
-3. Run validator: `python .claude/skills/vci-cuongbx/skill-creator-ultra/scripts/validate_skill.py SKILL.md`
+3. Run validator: `python .claude/skills/vci/skill-creator-ultra/scripts/validate_skill.py SKILL.md`
 4. Đảm bảo **Grade A** trở lên
 5. Submit PR
 
