@@ -1,14 +1,15 @@
 # Skills Library — vci-skill-cuongbx
 
-Thư viện skill của project, tổ chức thành **2 vùng** (zone) rõ ràng theo mục đích:
+Thư viện skill của project, tổ chức thành **3 vùng** (zone) rõ ràng theo mục đích:
 
 ```
 .claude/skills/
-├── vci-cuongbx/        🟦 11 skills — hỗ trợ phát triển sản phẩm theo team (tracked in git)
-└── claudekit/          🟩 179 skills — full ClaudeKit Engineer catalog (325MB, .gitignored)
+├── vci-cuongbx/        🟦 11 skills  — hỗ trợ phát triển sản phẩm theo team (tracked in git)
+├── claudekit/          🟩 179 skills — full ClaudeKit Engineer catalog (325MB, .gitignored)
+└── xia/                🟣 1 skill    — feature heist (port/copy/adapt từ external repo)
 ```
 
-Tổng cộng **190 skills**, tương thích đa IDE (Claude Code, Antigravity, Cursor, Kilo, Codex, OpenCode, Windsurf, Cline…).
+Tổng cộng **191 skills**, tương thích đa IDE (Claude Code, Antigravity, Cursor, Kilo, Codex, OpenCode, Windsurf, Cline…).
 
 > **Note:** `claudekit/` chứa full 179 skills của ClaudeKit Engineer (~325MB) — physically trên disk để dùng, nhưng **không commit vào git** (đã add vào `.gitignore`). Trên máy khác cần chạy `./.claude/skills/restore-claudekit.sh` để clone lại từ `~/.claude/skills/`.
 
@@ -56,6 +57,16 @@ Skills từ ClaudeKit Engineer — dùng chung cho mọi task dev. Xem [claudeki
 | `debugger` | Debug agent |
 | `systematic-debugging` | Debug methodology |
 | `test-driven-development` | TDD workflow |
+
+---
+
+## 🟣 Zone `xia/` — Feature Heist Tools
+
+Skills port/copy/adapt feature từ external GitHub repo về project local. Xem [xia/README.md](./xia/README.md).
+
+| Skill | Mục đích |
+|---|---|
+| `xia` | 4 modes (`--compare` / `--copy` / `--improve` / `--port`) + 6-step workflow (Recon → Map → Analyze → Challenge → Plan → Deliver) với license check, attribution tự động, manifest tracking |
 
 ---
 

@@ -2,6 +2,74 @@
 
 Skills hỗ trợ **toàn bộ SDLC** của team phát triển sản phẩm — BA, Dev, QA, Tester, PM, Tech Lead.
 
+---
+
+## 🚀 First-time user — Bắt đầu từ đâu?
+
+### Bước 1: Xác định vai trò
+
+| Tôi là... | Đọc section nào trước |
+|---|---|
+| 👤 **BA** | [Quickstart §BA](../../../references/quickstart-by-role.md#-ba-business-analyst--90-use-case) — Mode 1/2/3 |
+| 💻 **Dev Backend** | [Quickstart §Dev BE](../../../references/quickstart-by-role.md#-dev--backend-mode-5a) — Mode 5A |
+| 💻 **Dev Frontend** | [Quickstart §Dev FE](../../../references/quickstart-by-role.md#-dev--frontend-mode-5b) — Mode 5B |
+| 🧪 **QA/Tester** | [Quickstart §QA](../../../references/quickstart-by-role.md#-qa--tester-mode-6) — Mode 6 |
+| 📊 **PM** | [Quickstart §PM](../../../references/quickstart-by-role.md#-pm--quản-lý-dự-án) — Mode 7/8/9 |
+| 🎨 **BA + FE** | [Quickstart §Mockup](../../../references/quickstart-by-role.md#-ba--fe-dev--mockup-mode-10) — Mode 10 |
+| 🔍 **Tech Lead** | [Quickstart §Audit](../../../references/quickstart-by-role.md#-tech-lead--audit-mode-4) — Mode 4 |
+
+### Bước 2: Invoke skill
+
+Tại project directory, gõ trong Claude Code / Antigravity:
+
+```
+Tạo spec cho tính năng nhập kho vật tư IMS_NK_01
+```
+
+Skill sẽ tự kích hoạt (based on `description:` frontmatter). AI đọc SKILL.md + routes đến đúng Mode.
+
+### Bước 3: Cung cấp context
+
+AI sẽ hỏi thông tin tối thiểu nếu thiếu. Để giảm ask-back, cung cấp ngay:
+- **Feature ID** (VD: `IMS_NK_01`)
+- **Module** (VD: `inventory`)
+- **Roles** (VD: Thủ kho, QL kho, Kế toán)
+- **Luồng chính** (3-5 bước)
+
+### Bước 4: Review output
+
+- ☐ Đọc **Gap Report** ở cuối output — Critical 🔴 phải xử lý ngay
+- ☐ Check `[⚠️ CẦN XÁC NHẬN]` markers — clarify với stakeholder
+- ☐ Commit output vào git (nếu đạt)
+
+### Bước 5: Next mode
+
+Workflow chuẩn: Mode 1 (BA) → Mode 5 (Dev) + Mode 6 (QA) + Mode 10 (Mockup) → Mode 4 (Audit) → Mode 8/9 (PM).
+
+📚 **Walkthrough đầy đủ với prompt mẫu + output mẫu:** [references/quickstart-by-role.md](../../../references/quickstart-by-role.md)
+
+---
+
+## 🏢 Dùng cho Enterprise / Team lớn?
+
+Project có **nhiều role cùng làm trên 1 repo** (BA + Dev + QA + PM + Tech Lead + Architect...), cần:
+
+- ✅ **Ownership & RACI** — ai làm gì, ai duyệt
+- ✅ **Spec lifecycle** (DRAFT → IN_REVIEW → APPROVED → FROZEN → DEPRECATED)
+- ✅ **Approval workflow** với signers
+- ✅ **Git branching strategy** per mode (`spec/*`, `feat/*`, `fix/*`)
+- ✅ **CODEOWNERS** setup
+- ✅ **Handoff protocol** (auto-notify next team)
+- ✅ **Jira/Slack/Teams integration**
+- ✅ **Compliance & audit** (SOC2, ISO, GDPR)
+- ✅ **Cross-feature dependencies + impact matrix**
+- ✅ **Onboarding new members**
+
+📚 **Enterprise full guide:** [references/enterprise-workflow.md](../../../references/enterprise-workflow.md)
+📚 **Enterprise spec frontmatter template:** [references/templates/spec-frontmatter-enterprise.md](../../../references/templates/spec-frontmatter-enterprise.md)
+
+---
+
 ## Bản đồ 11 skills theo vai trò
 
 ### 🎯 Meta — bảo trì chính skill vci-skill-cuongbx
