@@ -1,37 +1,38 @@
-# 🟣 Zone: `xia/` — Feature Heist Tools
+# 🟣 Zone: `xia/` — Công cụ Xỉa Feature
 
 Zone dedicated cho skills về port/copy/adapt features từ external sources về project local.
 
 ## Skills trong zone
 
-| Skill | Description |
+| Skill | Mô tả |
 |---|---|
 | [`xia/`](./xia/) | Port/copy/adapt feature từ GitHub repo với 4 modes + 6-step workflow |
 
-## Zone philosophy
+## Triết lý chung
 
 Skills ở đây đều share nguyên tắc:
 
-1. **Challenge-driven decisions** — Ép user face hidden assumptions, không copy mù
+1. **Challenge-driven decisions** — Ép user đối mặt hidden assumptions, không copy mù
 2. **Attribution first** — Header + NOTICE + manifest auto-generated
-3. **Security by default** — Treat fetched content = untrusted data
+3. **Security by default** — Treat fetched content là untrusted data
 4. **Rollback-ready** — Git branch + checkpoint commits mỗi step
 5. **Idempotent** — Manifest fingerprinting tránh duplicate ports
+6. **Front door, not orchestrator** — Delegate planning/delivery cho `ck:plan`/`ck:cook`
 
-## Why separate zone?
+## Tại sao tách zone riêng?
 
-`/xia` skill không fit vào `vci-cuongbx/` (BA/Dev/QA/PM workflow) hay `claudekit/` (core dev tools). Nó là:
+`/xia` không fit vào `vci-cuongbx/` (BA/Dev/QA/PM workflow) hoặc `claudekit/` (core dev tools). Nó là:
 
-- **Orchestrator** — compose `ck:repomix`, `ck:research`, `ck:scout`, `ck:sequential-thinking`, `ck:security`, `ck:plan`, `ck:cook`
+- **Orchestrator nhẹ** — compose `ck:repomix`, `ck:research`, `ck:scout`, `ck:sequential-thinking`, `ck:security`, `ck:plan`, `ck:cook`
 - **Cross-cutting** — ảnh hưởng mọi layer của project khi port
 - **Opinionated** — có philosophy + manifest format riêng
 
-Separating thành zone `xia/` cho phép future expand với related skills:
+Tách thành zone `xia/` cho phép expand với related skills sau:
 - `port-rollback/` — dedicated rollback tool
-- `dep-port/` — port just dependencies (no source code)
-- `license-audit/` — scan project for all ported code + compliance report
+- `dep-port/` — port chỉ dependencies (không source code)
+- `license-audit/` — scan project all ported code + compliance report
 
-## Integration
+## Composition map
 
 | Compose với | Từ zone |
 |---|---|
@@ -56,7 +57,7 @@ project-root/
 └── src/...                  # Ported files với attribution headers
 ```
 
-## Add `.xia/` to `.gitignore`
+## Thêm `.xia/` vào `.gitignore`
 
 ```gitignore
 # xia cache (fetched content, audit logs)
@@ -71,18 +72,24 @@ Manifest (`.xia-manifest.json`) và `NOTICE` file **PHẢI commit** — audit tr
 # Test skill loaded
 cat .claude/skills/xia/xia/SKILL.md | head
 
-# Compare mode (safe — no writes)
+# Compare mode (an toàn — không ghi file)
 /xia --compare https://github.com/sindresorhus/p-retry
 
 # Full port
 /xia --improve https://github.com/tj/node-ratelimiter rate-limiter
+
+# Quick experiment (skip challenges, risky)
+/xia --port --fast https://github.com/some/lib feature
+
+# Batch mode (CI-friendly)
+/xia --improve --auto https://github.com/some/lib feature
 ```
 
 ## Prerequisites
 
 - `ck` CLI (`npm install -g claudekit-cli`)
-- Python 3.9+ (for scripts)
-- `gh` CLI (GitHub auth)
+- Python 3.9+ (chạy scripts)
+- `gh` CLI (auth GitHub)
 - Git 2.20+
 
 ---
