@@ -70,6 +70,61 @@ Skills port/copy/adapt feature từ external GitHub repo về project local. Xem
 
 ---
 
+## 🔗 Cross-zone Integration — Compose skills across zones
+
+Skills **không tự invoke skill khác** — user phải gọi explicit. Bảng dưới gợi ý khi nào compose từ zone này sang zone khác:
+
+```
+🟦 vci-cuongbx (SDLC)        🟩 claudekit (core dev)        🟣 xia (feature heist)
+     │                              │                              │
+     │  Mode 1 Generate ────────► mermaid-expert (vci)            │
+     │                         brainstorming (vci)                │
+     │                         ck:plan (ck) ─── if complex plan    │
+     │  Mode 4 Audit ──────────► code-review (ck)                 │
+     │                         ck:security (ck) ── STRIDE+OWASP   │
+     │  Mode 5A/B Dev Guide ───► api-documentation-gen (vci)      │
+     │                         xia --port (xia) ─── port lib ─────┤
+     │  Mode 6 Test Gen ───────► test-automator (vci)             │
+     │                         acceptance-orchestrator (vci)      │
+     │                         tdd-workflow (ck)                  │
+     │  Mode 8/9 PM ───────────► ck:loop (ck) ── auto weekly       │
+     │                                                              │
+     │◄─── xia post-Deliver: Mode 5 Dev Guide + Mode 6 Test Gen ───┤
+     │                                                              │
+     └──────── After all: code-review → simplify-code → commit ────┘
+                          (all from claudekit zone)
+```
+
+### Workflow mẫu end-to-end
+
+**Scenario:** Team cần thêm rate limiter vào feature mới.
+
+```
+1. /brainstorming rate limiter           (vci: brainstorming)
+2. Tạo spec IMS_NK_02                    (vci: Mode 1 Generate) ─── compose mermaid-expert
+3. /xia --compare {ref-repo}             (xia: compare mode)
+4. /xia --port {ref-repo} rate-limiter   (xia --port → delegate ck:plan + ck:cook)
+5. Dev guide backend IMS_NK_02           (vci: Mode 5A) ─── compose api-documentation-generator
+6. Sinh test cases                       (vci: Mode 6) ─── compose test-automator
+7. Audit spec ↔ code                     (vci: Mode 4) ─── compose ck:security
+8. /code-review                           (ck: code-review) ─── adversarial
+9. /commit                                (ck: commit) ─── conventional commit + PR
+10. Mode 8/9 Track + Report              (vci: PM zone) ─── compose ck:loop weekly
+```
+
+**Kết quả:** 7 skills từ 3 zones, ~2 giờ thay vì 1 tuần thủ công.
+
+📚 **Full cross-zone map + anti-patterns:** [../../references/cross-zone-suggestions.md](../../references/cross-zone-suggestions.md)
+
+### Quan trọng: Anti-duplication
+
+- ❌ Gọi `/ck:brainstorm` từ trong `/xia` — phá phase ownership
+- ❌ Dùng Mode 1 + business-analyst cùng lúc — Mode 1 đã include BA
+- ❌ `xia --compare` + Mode 4 cùng lúc — mục đích khác nhau (external vs local)
+- ❌ Mode 10 Mockup khi chưa có Level 4 spec — mockup fail validation
+
+---
+
 ## Cài đặt / Sync sang IDE khác
 
 Skill format (`SKILL.md` + frontmatter `name:` + `description:`) đã chuẩn Anthropic → **hoạt động trực tiếp** ở:

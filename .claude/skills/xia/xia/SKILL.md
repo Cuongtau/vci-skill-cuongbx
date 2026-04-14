@@ -288,6 +288,34 @@ Risk score: {Low/Medium/High}
 - ⚠️ `--copy` mode dễ "sốc văn hóa" nếu stack khác xa → suggest `--improve`
 - ⚠️ `--port` tốn thời gian × 3-5 so với `--copy` — estimate cost ở Recon
 
+## 🛡️ Anti-duplication guards
+
+### `/xia --compare` vs `vci-cuongbx Mode 4 Audit` — DISAMBIGUATION
+
+**Khi nào dùng `/xia --compare`**:
+- Có **external GitHub repo URL** làm reference
+- Muốn so sánh approach của project với repo khác
+- Mục đích: research, architecture review, pre-port decision
+
+**Khi nào dùng `Mode 4 Audit` (vci-cuongbx)**:
+- Chỉ có **local spec + local source code**
+- Mục đích: verify spec ↔ code consistency
+- Output: Gap Report + Deviation Report + RTM
+
+**REFUSE** nếu user gọi cả 2 cho cùng task. Pattern match:
+- User nói "audit feature X" + cung cấp repo URL → dùng `/xia --compare`
+- User nói "audit feature X" + cung cấp local spec/code → dùng `Mode 4`
+- User confuse → hỏi rõ: *"Anh muốn so với repo external hay audit spec local?"*
+
+### KHÔNG invoke `/ck:brainstorm` từ xia
+
+Reason: `/ck:brainstorm` tạo separate planning handoff → phá phase ownership của xia.
+Alternative: Dùng `brainstormer` agent inline trong Phase 4 Challenge.
+
+### KHÔNG reinvent `ck:plan` hoặc `ck:cook` trong xia
+
+xia là **front door**. Phase 5 = one-line delegate `ck:plan`, Phase 6 = one-line delegate `ck:cook`.
+
 ---
 
 # References

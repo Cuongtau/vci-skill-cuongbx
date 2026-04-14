@@ -53,30 +53,19 @@ progress và báo cáo PMO — đảm bảo mọi vai trò đều đọc hiểu 
 
 ---
 
-# Pipeline end-to-end — 1 feature đi từ ý tưởng đến delivery
+# Pipeline end-to-end — 10/10 modes
 
-```mermaid
-flowchart LR
-    Meeting[📝 Meeting notes<br/>ý tưởng rời rạc] -->|Mode 2| Draft[📄 PRD Draft]
-    Idea[💡 Yêu cầu<br/>rõ ràng] -->|Mode 1| PRD[📄 PRD Approved]
-    Draft -->|refine| PRD
-    PRD -->|Mode 7| Summary[📋 1-page Summary<br/>stakeholder review]
-    PRD -->|Mode 5A| BEGuide[⚙️ Backend Guide]
-    PRD -->|Mode 5B| FEGuide[🎨 Frontend Guide]
-    PRD -->|Mode 10| Mockup[🖼️ Mockup .tsx]
-    PRD -->|Mode 6| Tests[✅ Test Cases + Execution]
-    Summary --> Kickoff[🚀 Sprint kickoff]
-    BEGuide --> Code[💻 Code]
-    FEGuide --> Code
-    Mockup --> Code
-    Code -->|Mode 4| Audit[🔍 Gap Report]
-    Audit -->|fix via| Update[🔁 Mode 3 Update + CR]
-    Code --> PMTrack[📊 Mode 8 Track Dashboard]
-    PMTrack -->|sprint end| PMReport[📤 Mode 9 PMO Report]
-    Update --> Code
+```
+M2 Structure ──┐                              ┌─ M5A Backend ─┐
+                ├→ M1 Generate (PRD) ──┬→ M7 ─┼─ M5B Frontend ─┤
+Idea ──────────┘                       │ Summary  M10 Mockup  ├→ Code → M4 Audit
+                                        │        M6 Test       │         ↓
+                                        └→ Sprint kickoff ─────┘      M3 Update + CR
+                                                                          ↓
+                                                           M8 Track → M9 PMO Report
 ```
 
-**10/10 modes trong pipeline:** M1 Generate · M2 Structure · M3 Update (qua CR) · M4 Audit · M5A Backend · M5B Frontend · M6 Test · **M7 Summary (stakeholder)** · M8 Track · M9 Report · M10 Mockup.
+**10/10 modes:** M1 Generate · M2 Structure · M3 Update (CR) · M4 Audit · M5A Backend · M5B Frontend · M6 Test · M7 Summary · M8 Track · M9 Report · M10 Mockup.
 
 ## SDLC Stage × Mode Matrix — Mode nào ở giai đoạn nào
 
@@ -99,19 +88,34 @@ flowchart LR
 
 # Input/Output Contract — Cần gì, được gì
 
-| Mode | Input tối thiểu | Output chính | Tự động sinh kèm |
-|---|---|---|---|
-| **1 Generate** | Feature ID + tên + mục tiêu + roles + luồng | `spec.md` (4 level) | Mermaid diagrams, Glossary, Audit Trail, Notification Rules, Gap Report |
-| **2 Structure** | Text rời rạc (notes/tickets/email) | `spec.md` + `[⚠️ CẦN XÁC NHẬN]` markers | Same as Mode 1 |
-| **3 Update** | Path tới spec + nội dung sửa | Updated `spec.md` + Changelog entry | Auto CR nếu Approved spec |
-| **4 Audit** | Path tới spec (+ source code nếu có) | Gap Report + RTM + Deviation Report | Action items ưu tiên |
-| **5A Backend** | Path tới spec | `dev_guide.md` | DB migration, API endpoints, BR pseudo-code |
-| **5B Frontend** | Path tới spec | `dev_guide.md` | Component tree, Route map, Form validation UX |
-| **6 Test Gen** | Path tới spec | `test_cases.md` + `test_mapping.md` + `test_execution.md` | BDD, Security tests, k6 templates, Playwright skeleton |
-| **7 Summary** | Path tới spec | 1-page summary (inline output) | — |
-| **8 Track** | — (auto đọc git log + changelogs) | Dashboard markdown | Progress Matrix, Scope Alerts |
-| **9 Report** | Period (tuần/sprint) | Executive Summary + Feature Detail | CR Summary, Release Notes |
-| **10 Mockup** | Path tới spec (Level 4 required) | `src/mockups/features/.../Mockup.tsx` | MockupHub route registration |
+| Mode | Input tối thiểu | Output chính |
+|---|---|---|
+| **1 Generate** | Feature ID + roles + luồng | `spec.md` 4 level + Mermaid + Gap Report |
+| **2 Structure** | Text rời rạc | `spec.md` + `[⚠️ CẦN XÁC NHẬN]` |
+| **3 Update** | Path spec + nội dung sửa | Updated `spec.md` + Changelog + auto CR |
+| **4 Audit** | Path spec (+ source code) | Gap Report + RTM + Deviation |
+| **5A Backend** | Path spec | `dev_guide.md` + DB migration + API + BR |
+| **5B Frontend** | Path spec | `dev_guide.md` + Component tree + Route + UX |
+| **6 Test Gen** | Path spec | `test_cases.md` + `test_mapping.md` + `test_execution.md` |
+| **7 Summary** | Path spec | 1-page summary inline |
+| **8 Track** | — (auto git log) | Progress dashboard |
+| **9 Report** | Period | Executive summary + Release notes |
+| **10 Mockup** | Path spec L4 | `Mockup.tsx` + MockupHub route |
+
+---
+
+# 🔗 Gợi ý Cross-zone
+
+3 zones: **vci-cuongbx** (SDLC) · **claudekit** (core dev) · **xia** (feature heist).
+
+- **Mode 1/2 PRD** → `mermaid-expert`, `brainstorming` · **xia --compare** nếu ref repo
+- **Mode 4 Audit** → `spec-to-code-compliance`, `ck:security`, `code-review`
+- **Mode 5A BE** → `api-documentation-generator`, `ck:plan` · **5B FE** → `xia --port` (lib)
+- **Mode 6 Test** → `acceptance-orchestrator`, `test-automator`, `tdd-workflow`
+- **Mode 8/9 PM** → `ck:loop` (auto weekly)
+- **Post all** → `code-review` → `simplify-code` → `commit`
+
+📚 **Full map + demo end-to-end:** [references/cross-zone-suggestions.md](references/cross-zone-suggestions.md)
 
 ---
 
@@ -379,15 +383,9 @@ blocked_by: []
 
 ---
 
-# Common Pitfalls — Tránh lỗi phổ biến
+# Common Pitfalls
 
-Top 3 lỗi hay gặp nhất:
-
-- ❌ Mode 1 với input thiếu (chỉ có tên feature) → AI bịa → cung cấp Feature ID + roles + luồng
-- ❌ Mode 3 update Approved spec không tạo CR → mất audit trail → để auto tạo CR
-- ❌ Mode 10 auto-update `.md` khi sửa `.tsx` → mất intent BA → PHẢI hỏi trước khi sync
-
-📚 **Full 14 pitfalls với giải thích:** `references/common-pitfalls.md`
+📚 14 anti-patterns phổ biến + đúng cách: `references/common-pitfalls.md`
 
 ---
 
@@ -403,11 +401,9 @@ State Machine, BR, AC BDD, Button Matrix, gap report.
 📚 *Chi tiết: `examples/example-dispatch-order.md`*
 
 ### Ví dụ 2 — Mode 2 Structure: BA có meeting notes rời
-> *"Đây là notes meeting phòng kho, cấu trúc giúp em:
-> 'Thủ kho nhập phiếu, ghi loại vật tư, số lượng. Quản lý duyệt. Nếu vật tư hết hạn thì cảnh báo...'"*
+> *"Notes meeting phòng kho, cấu trúc giúp em: 'Thủ kho nhập phiếu... QL duyệt...'"*
 
-→ AI trích xuất roles (Thủ kho, Quản lý), states (Draft → Submitted → Approved),
-BR (cảnh báo hết hạn), sinh PRD 4 level + `[⚠️ CẦN XÁC NHẬN]` ở chỗ mơ hồ.
+→ AI trích xuất roles/states/BR → PRD 4 level + `[⚠️ CẦN XÁC NHẬN]` ở chỗ mơ hồ.
 
 ### Ví dụ 3 — Mode 4 Audit: Tech Lead kiểm tra spec ↔ code
 > *"Audit feature IMS_NK_01 — spec và code có khớp không?"*
@@ -434,33 +430,18 @@ pseudo-code, State Machine guards, Caching strategy, Logging contract.
 ## 🟧 Zone PM
 
 ### Ví dụ 6a — Mode 7 Summary: PM chuẩn bị họp stakeholder
-> *"Tóm tắt feature IMS_NK_01 cho họp sáng mai"*
-
-→ AI output inline (không tạo file): Status + Owner + Scope metrics + Estimation + Risks + Dependencies + RACI. Gọn 1 trang A4.
+> *"Tóm tắt feature IMS_NK_01 cho họp sáng mai"* → Output inline 1 trang A4 (Status + Owner + Scope + Risks + RACI).
 
 ### Ví dụ 6b — Mode 8 Track: PM hỏi tiến độ
-> *"Ai đang làm gì?"*
-
-→ AI đọc git log + changelogs → Dashboard:
-
-| Feature | Owner | Status | Progress | Last Update |
-|---------|-------|--------|----------|-------------|
-| IMS_NK_01 | @dev_a | In Progress | 60% | 2d ago |
-| IMS_XK_02 | @dev_b | Review | 90% | 1d ago |
+> *"Ai đang làm gì?"* → Dashboard markdown: Progress Matrix + Recent Activity + Scope Alerts.
 
 ### Ví dụ 6c — Mode 9 Report: PM báo cáo PMO
-> *"Tạo sprint report tuần này"*
-
-→ AI thu thập git log + CR log → sinh Executive Summary, Feature Detail,
-CR Summary, Risks & Blockers, Release Notes.
+> *"Tạo sprint report tuần này"* → Executive Summary + Feature Detail + CR Summary + Risks + Release Notes.
 
 ## 🟪 Zone Shared
 
 ### Ví dụ 7 — Mode 10 Mockup: BA tạo mockup UI
-> *"Tạo mockup cho màn hình đăng nhập, lấy chuẩn từ spec IMS_AUTH_01"*
-
-→ AI tạo `src/mockups/features/auth/IMS_AUTH_01_Mockup.tsx` (Design System
-components, dummy data, form state), đăng ký route vào `MockupHub.tsx`.
+> *"Tạo mockup cho màn đăng nhập từ IMS_AUTH_01"* → `src/mockups/features/auth/IMS_AUTH_01_Mockup.tsx` + MockupHub route. Pre-flight check: spec có Level 4 + UI Spec + Button Matrix.
 
 ---
 
@@ -487,6 +468,25 @@ components, dummy data, form state), đăng ký route vào `MockupHub.tsx`.
 - ⚠️ Spec đã Approved mà update → PHẢI tạo Change Request (Mode 3)
 - ⚠️ Mermaid labels chứa ký tự đặc biệt → PHẢI quote: `"Node's Label"`
 - ⚠️ SKILL.md reference `references/` cho chi tiết — KHÔNG copy template vào đây
+
+## 🛡️ Anti-duplication guards (4 hard rules)
+
+AI self-enforce các rule sau khi detect conflict:
+
+1. **Mode 1 vs `business-analyst`** — REFUSE invoke cả 2 cùng feature (Mode 1 đã include BA)
+2. **Mode 10 precondition** — REFUSE nếu spec chưa có Level 4 + UI Spec + Button Matrix
+3. **Mode 4 vs `/xia --compare`** — Disambiguation: local audit vs external repo compare
+4. **KHÔNG invoke `/ck:brainstorm`** từ Mode 1 hoặc `/xia` (phá phase ownership)
+
+## 🔍 Pre-flight check script
+
+```bash
+python references/scripts/check-mode-prerequisites.py --mode 10 --spec <path>
+```
+
+Exit codes: `0` OK · `1` WARN · `2` FAIL (refuse).
+
+📚 **Chi tiết + examples + enforcement rules:** [references/anti-duplication-guards.md](references/anti-duplication-guards.md)
 
 <!-- Version: 2.4.0 -->
 <!-- Last reviewed: 2026-04-14 -->
