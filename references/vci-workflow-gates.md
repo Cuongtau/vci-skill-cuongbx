@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Quy trình phát triển sản phẩm VCI — Gate cảnh báo theo Stage
 
 > **Mục đích:** Gợi ý team BA/Dev/QA/PM phối hợp tuần tự, tránh skip stage không cần thiết. AI **warn + hỏi xác nhận**, user có thể override.

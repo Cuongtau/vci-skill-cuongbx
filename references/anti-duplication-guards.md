@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Anti-duplication Guards — Hard rules để tránh skill conflict
 
 Các rule bên dưới được AI self-enforce khi detect pattern conflict giữa modes/skills.

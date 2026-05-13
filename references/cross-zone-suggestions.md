@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Cross-zone Suggestions — Compose skill từ các zones
 
 Project có **3 zones**:

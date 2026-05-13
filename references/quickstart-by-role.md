@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Quickstart by Role — Hướng dẫn chi tiết theo vai trò
 
 Mỗi role có workflow khác. Đọc section của vai trò mình đang làm.

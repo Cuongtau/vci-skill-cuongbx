@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # PRD/Spec Template — 4 Level
 
 Template chuẩn cho tài liệu PRD/Spec. AI sử dụng template này khi chạy

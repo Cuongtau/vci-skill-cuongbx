@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # PM Report Template
 
 Template cho AI khi sinh báo cáo PM (Mode 8: Track, Mode 9: Report).

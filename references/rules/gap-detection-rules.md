@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Gap Detection Rules & Code-Spec Comparison
 
 Quy tắc cho AI khi chạy Audit mode — phát hiện thiếu sót trong spec

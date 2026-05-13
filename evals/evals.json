@@ -1,0 +1,131 @@
+{
+  "skill": "vci-skill-cuongbx",
+  "version": "2.7.0",
+  "schema_version": "1.0",
+  "description": "Trigger evaluation test cases cho 10 modes của vci-skill-cuongbx. Mỗi mode có 3 test case: 2 should_trigger=true, 1 should_trigger=false (anti-pattern hoặc collision với skill khác).",
+  "evaluation_method": "manual review — verify skill được Claude trigger đúng input và KHÔNG trigger với input thuộc skill khác",
+  "modes": [
+    {
+      "mode": "M1",
+      "name": "Generate Spec",
+      "zone": "BA",
+      "test_cases": [
+        {"input": "Tạo spec cho feature đăng nhập IMS_AUTH_01", "should_trigger": true, "reason": "Trigger 'tạo spec' + Feature_ID rõ"},
+        {"input": "Viết PRD cho tính năng nhập kho vật tư", "should_trigger": true, "reason": "Trigger 'viết PRD' + scope rõ"},
+        {"input": "Tạo marketing PRD cho campaign Black Friday Q4", "should_trigger": false, "reason": "Marketing PRD → marketing-strategy-pmm, không phải sản phẩm SDLC"}
+      ]
+    },
+    {
+      "mode": "M2",
+      "name": "Structure Notes",
+      "zone": "BA",
+      "test_cases": [
+        {"input": "Em có meeting notes rời rạc về chức năng quản lý kho, cấu trúc giúp em", "should_trigger": true, "reason": "Notes rời + cần cấu trúc PRD"},
+        {"input": "Có draft Word từ stakeholder, convert sang spec chuẩn", "should_trigger": true, "reason": "Convert unstructured → structured spec"},
+        {"input": "Tổng hợp blog posts thành ebook", "should_trigger": false, "reason": "Content writing → content-creator hoặc beautiful-prose"}
+      ]
+    },
+    {
+      "mode": "M3",
+      "name": "Update Spec",
+      "zone": "BA",
+      "test_cases": [
+        {"input": "Cập nhật spec IMS_NK_01, thêm BR_005 về validate số lượng", "should_trigger": true, "reason": "Update spec có Feature_ID + BR mới"},
+        {"input": "Spec IMS_AUTH_01 cần thêm 2FA, tạo Change Request", "should_trigger": true, "reason": "Update spec APPROVED → CR"},
+        {"input": "Cập nhật blog post về 2FA", "should_trigger": false, "reason": "Blog post không phải spec SDLC"}
+      ]
+    },
+    {
+      "mode": "M4",
+      "name": "Audit (Gap Detection)",
+      "zone": "BA",
+      "test_cases": [
+        {"input": "Audit feature IMS_NK_01 — spec có khớp code không?", "should_trigger": true, "reason": "Audit spec ↔ code = M4 core"},
+        {"input": "Kiểm tra spec IMS_AUTH_01 có thiếu BR nào không", "should_trigger": true, "reason": "Spec audit lens"},
+        {"input": "Audit security của API endpoint /login", "should_trigger": false, "reason": "Security audit → api-security-testing"}
+      ]
+    },
+    {
+      "mode": "M5A",
+      "name": "Dev Guide Backend",
+      "zone": "Dev",
+      "test_cases": [
+        {"input": "Tạo dev guide backend cho IMS_NK_01", "should_trigger": true, "reason": "Dev guide BE từ spec đã có"},
+        {"input": "Sinh implementation guide BE cho feature đăng nhập", "should_trigger": true, "reason": "BE implementation guide"},
+        {"input": "Code review cho file auth.controller.ts", "should_trigger": false, "reason": "Code review → code-reviewer / code-review-excellence"}
+      ]
+    },
+    {
+      "mode": "M5B",
+      "name": "Dev Guide Frontend",
+      "zone": "Dev",
+      "test_cases": [
+        {"input": "Dev guide frontend cho màn login IMS_AUTH_01", "should_trigger": true, "reason": "FE implementation guide"},
+        {"input": "Sinh hướng dẫn implement FE cho phiếu nhập kho", "should_trigger": true, "reason": "FE dev guide có Feature scope"},
+        {"input": "Best practices cho React hooks", "should_trigger": false, "reason": "Generic best practice → react-best-practices"}
+      ]
+    },
+    {
+      "mode": "M6",
+      "name": "Test Generation",
+      "zone": "QA",
+      "test_cases": [
+        {"input": "Sinh test cases cho IMS_NK_01", "should_trigger": true, "reason": "Test case generation từ spec"},
+        {"input": "Tạo UAT script cho feature đăng nhập", "should_trigger": true, "reason": "UAT = M6"},
+        {"input": "Run pytest cho file test_auth.py", "should_trigger": false, "reason": "Execute test → debugger hoặc test-runner"}
+      ]
+    },
+    {
+      "mode": "M7",
+      "name": "Summary",
+      "zone": "PM",
+      "test_cases": [
+        {"input": "Tóm tắt feature IMS_NK_01 cho họp sáng mai", "should_trigger": true, "reason": "Summary 1-pager cho meeting"},
+        {"input": "Brief status update của project về phiếu nhập kho", "should_trigger": true, "reason": "Brief = summary mode"},
+        {"input": "Tóm tắt 1 bài research paper khoa học", "should_trigger": false, "reason": "Academic summary → research-summarizer hoặc claude-scientific-skills"}
+      ]
+    },
+    {
+      "mode": "M8",
+      "name": "Track Progress",
+      "zone": "PM",
+      "test_cases": [
+        {"input": "Ai đang làm gì tuần này?", "should_trigger": true, "reason": "Progress tracking dashboard"},
+        {"input": "Tuần này tiến độ feature IMS_NK_01 đến đâu?", "should_trigger": true, "reason": "Progress query"},
+        {"input": "Hiệu suất CPU của server hôm nay", "should_trigger": false, "reason": "Performance monitoring → observability-engineer"}
+      ]
+    },
+    {
+      "mode": "M9",
+      "name": "Report PMO",
+      "zone": "PM",
+      "test_cases": [
+        {"input": "Tạo sprint report tuần này cho PMO", "should_trigger": true, "reason": "Sprint report = M9"},
+        {"input": "Release notes cho phiên bản 1.2.0", "should_trigger": true, "reason": "Release notes là 1 phần M9"},
+        {"input": "Board deck cho cuộc họp HĐQT", "should_trigger": false, "reason": "Board deck → board-deck-builder (c-level skill)"}
+      ]
+    },
+    {
+      "mode": "M10",
+      "name": "Mockup UI",
+      "zone": "Shared",
+      "test_cases": [
+        {"input": "Tạo mockup màn đăng nhập IMS_AUTH_01", "should_trigger": true, "reason": "Mockup UI từ spec có Feature_ID"},
+        {"input": "Vẽ giao diện danh sách phiếu nhập kho bằng React", "should_trigger": true, "reason": "UI mockup React"},
+        {"input": "Thiết kế Figma cho landing page marketing", "should_trigger": false, "reason": "Marketing landing → landing-page-generator"}
+      ]
+    }
+  ],
+  "anti_pattern_tests": [
+    {"input": "Sửa typo trong README.md", "should_trigger": false, "reason": "Typo fix không cần PRD/spec"},
+    {"input": "Refactor component Button.tsx", "should_trigger": false, "reason": "Code refactor → code-refactoring-* skills"},
+    {"input": "Setup database migration cho Postgres", "should_trigger": false, "reason": "DB migration → database-migration / postgresql"},
+    {"input": "Tạo CI/CD pipeline GitHub Actions", "should_trigger": false, "reason": "CI/CD → cicd-automation-workflow-automate / github-workflow-automation"}
+  ],
+  "stats": {
+    "total_test_cases": 37,
+    "should_trigger_count": 22,
+    "should_not_trigger_count": 15,
+    "modes_covered": 11
+  }
+}

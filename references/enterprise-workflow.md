@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Enterprise Multi-role Workflow Guide
 
 Full guide cho dự án doanh nghiệp với nhiều role cùng làm trên 1 repo.

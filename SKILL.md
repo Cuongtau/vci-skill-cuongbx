@@ -6,26 +6,16 @@ description: |
   đến bàn giao test. Hỗ trợ 10 chế độ chia theo 5 vùng vai trò: Zone BA
   (Generate, Structure, Update, Audit), Zone Dev (Dev Guide Backend/Frontend),
   Zone QA (Test Gen), Zone PM (Summary, Track, Report), Zone Shared (Mockup UI).
-  Dùng khi user nói "tạo spec", "viết PRD", "tạo tài liệu BA", "dev guide",
+  Triggers: "tạo spec", "viết PRD", "tạo tài liệu BA", "dev guide",
   "sinh test cases", "báo cáo tiến độ", "kiểm tra spec", "so sánh code",
   "tóm tắt feature", "scope thay đổi", "cập nhật spec", "UAT script",
-  "tạo mockup", "mockup UI", "handoff test", "quy trình phát triển". English
-  triggers: "create spec", "write PRD", "generate test cases", "dev guide",
+  "tạo mockup", "mockup UI", "handoff test", "quy trình phát triển".
+  English: "create spec", "write PRD", "generate test cases", "dev guide",
   "sprint report", "spec audit", "mockup".
-argument-hint: "[mode] [feature description hoặc đường dẫn spec]"
-languages: all
-license: MIT
-metadata:
-  author: cuongbx
-  version: "2.6.1"
-  category: documentation
-  tags:
-    - prd
-    - spec
-    - sdlc
-    - ba
-    - testing
-    - project-management
+  KHÔNG dùng cho: marketing PRD (→ marketing-strategy-pmm),
+  startup business case (→ startup-business-analyst-business-case),
+  generic documentation (→ documentation, docs-architect, doc-coauthoring),
+  technical change tracker chung chung (→ technical-change-tracker).
 ---
 
 # Goal
@@ -43,19 +33,27 @@ dõi tiến độ và báo cáo PMO — đảm bảo mọi vai trò đều đọ
 
 | 👤 Vai trò | Câu mở đầu điển hình | → Mode | File output |
 |---|---|---|---|
-| **BA** | *"Tạo spec cho tính năng nhập kho vật tư"* | [M1](#mode-1) | `docs/specs/{module}/{Feature_ID}/spec.md` |
+| **BA** | *"Tạo spec cho tính năng nhập kho vật tư"* | [M1](#mode-1) | `docs/specs/{zone}/{module}/{Feature_ID}_{tên}/*.md` |
 | **BA** | *"Em có meeting notes rời, cấu trúc giúp em"* | [M2](#mode-2) | Như trên + `[⚠️ CẦN XÁC NHẬN]` |
 | **BA** | *"Cập nhật spec IMS_NK_01, thêm BR_005"* | [M3](#mode-3) | Same path + auto changelog |
 | **Tech Lead** | *"Audit feature X — spec ↔ code có khớp?"* | [M4](#mode-4) | Gap Report + RTM |
-| **Dev BE** | *"Dev guide backend cho IMS_NK_01"* | [M5A](#mode-5) | `docs/specs/.../dev_guide.md` |
-| **Dev FE** | *"Dev guide frontend cho màn login"* | [M5B](#mode-5) | `docs/specs/.../dev_guide.md` |
-| **QA** | *"Sinh test cases cho IMS_NK_01"* | [M6](#mode-6) | `test_cases.md` + `test_mapping.md` + `test_execution.md` |
+| **Dev BE** | *"Dev guide backend cho IMS_NK_01"* | [M5A](#mode-5) | `docs/specs/{zone}/{module}/.../dev_guide.md` |
+| **Dev FE** | *"Dev guide frontend cho màn login"* | [M5B](#mode-5) | `docs/specs/{zone}/{module}/.../dev_guide.md` |
+| **QA** | *"Sinh test cases cho IMS_NK_01"* | [M6](#mode-6) | `docs/tests/{zone}/{module}/.../test_cases*.md` + `test_mapping.md` + `test_execution.md` |
 | **PM** | *"Tóm tắt feature X cho họp sáng mai"* | [M7](#mode-7) | Output inline (không tạo file) |
 | **PM** | *"Ai đang làm gì?"* · *"Tuần này tiến độ?"* | [M8](#mode-8) | Dashboard markdown |
 | **PM** | *"Tạo sprint report cho PMO"* | [M9](#mode-9) | Executive summary + release notes |
 | **BA + FE** | *"Tạo mockup màn đăng nhập IMS_AUTH_01"* | [M10](#mode-10) | `src/mockups/features/.../Mockup.tsx` |
 
 📚 **Walkthrough đầy đủ từng vai trò:** [references/quickstart-by-role.md](references/quickstart-by-role.md)
+
+---
+
+# 📁 Folder Convention v2.7.0
+
+**Từ v2.7.0**, spec (`docs/specs/`, BA + Dev) và test artifacts (`docs/tests/`, QA + Tester) tách thành 2 cây độc lập theo hierarchy `{zone}/{module}/{Feature_ID}_{tên}/`.
+
+📚 **Cấu trúc đầy đủ + quy tắc M1-M10 + migration script + cách áp dụng:** [references/folder-convention-v2.7.0.md](references/folder-convention-v2.7.0.md)
 
 ---
 
@@ -215,9 +213,10 @@ Nếu trigger không khớp rõ:
    - **L4**: Sub-feature — UI Spec, Business Rules, Validation, API, Acceptance Criteria (Dev, QA)
 3. Tự sinh Mermaid diagrams (📚 `references/patterns/mermaid-patterns.md`): State Machine, Screen Flow, ERD.
 4. Tự thêm: Glossary, Notification Rules, Audit Trail, Risk Assessment, Data Migration Notes.
-5. Output: `docs/specs/{module}/{Feature_ID}_{tên_snake_case}/spec.md`
-   > Mermaid inline trong spec.md. Chỉ tách `diagrams.md` khi > 500 dòng.
-6. Tạo/cập nhật `docs/specs/{module}/README.md` — index features.
+5. Output: `docs/specs/{zone}/{module}/{Feature_ID}_{tên_snake_case}/{Feature_ID}_{ScreenName}.md` — **1 file / màn hình** (List, Detail, Create, Update, Import)
+   > Mermaid inline trong file. Chỉ tách `diagrams.md` khi > 500 dòng.
+   > Nếu 1 feature nhỏ (chỉ 1 màn hình), fallback về `spec.md`.
+6. Tạo/cập nhật `docs/specs/{zone}/{module}/README.md` — index features trong module.
 7. ✅ **VERIFY:** chạy gap detection (📚 `references/rules/gap-detection-rules.md`) → **tự fix gap 🔴 Critical** trước khi trả kết quả.
 
 ### <a id="mode-2"></a>Mode 2: Structure — Cấu trúc hóa thông tin rời rạc
@@ -269,7 +268,7 @@ Hỏi sub-mode trước: *"Backend (5A) hay Frontend (5B)?"*
 
 **5B — Frontend:** Route mapping, Component breakdown, Conditional rendering (từ Button Matrix), Form validation UX, UI States, a11y, Keyboard shortcuts, Error boundaries.
 
-Output: `docs/specs/{module}/{Feature_ID}_{tên}/dev_guide.md`
+Output: `docs/specs/{zone}/{module}/{Feature_ID}_{tên}/dev_guide.md` (đi cùng spec để Dev đọc 1 chỗ)
 
 ---
 
@@ -296,7 +295,11 @@ User muốn skip → xác nhận *"vẫn sinh test"* để proceed.
    - Automation Skeleton (Playwright).
    - Requirement → Test Mapping (RTM).
    - **Test Execution Matrix** — checkbox, status (PASSED/FAILED/BLOCKED/UNTESTED), actual result, bug ID.
-2. Output: `test_cases.md` + `test_mapping.md` + `test_execution.md` trong feature folder.
+2. Output: tách vào **`docs/tests/{zone}/{module}/{Feature_ID}_{tên}/`** — KHÔNG ghi cạnh spec.
+   - `test_cases_{Feature_ID}_{ScreenName}.md` — 1 file / màn hình (List/Detail/Create/Update)
+   - `test_mapping.md` — RTM gộp cho cả feature (Requirement ↔ Test Case)
+   - `test_execution.md` — Execution Dashboard gộp cho cả feature
+   - `test_cases_{Feature_ID}_{Screen}_screenshoot/` — folder ảnh evidence (optional)
 3. `test_execution.md` gồm:
    - **Execution Dashboard:** tổng TC, số PASSED/FAILED/BLOCKED/UNTESTED, tỷ lệ %.
    - **Execution Matrix:** mỗi TC có checkbox `[ ]`, phân loại (Happy/Negative/Edge), priority, status, actual result.
@@ -344,27 +347,11 @@ Thu thập git log, spec status, CR log → sinh: Executive Summary, Feature Det
 
 Project có **nhiều vai trò cùng làm trên 1 repo** → cần guardrails tránh xung đột, đảm bảo compliance.
 
-### Ma trận RACI (tóm lược)
+**Vòng đời spec:** `DRAFT → IN_REVIEW → APPROVED → FROZEN → DEPRECATED`
 
-| Artifact | R (Chủ trì) | A (Duyệt) | C (Tư vấn) | I (Thông báo) |
-|---|---|---|---|---|
-| `spec.md` L1-2 | PM | Architect | BA | Dev, QA |
-| `spec.md` L3-4 | BA | Tech Lead, QA | PM, FE/BE Lead | Tester |
-| `dev_guide.md` | Tech Lead | BE/FE Lead | Architect | Dev team |
-| `test_cases.md` | QA Lead | QA Manager | BA, Dev | PM |
-| `Mockup.tsx` | FE Dev | UX Designer | BA | PM |
+📚 **RACI matrix đầy đủ + Transition rules + CODEOWNERS pattern + Git branching + Handoff notification + Enterprise frontmatter:** [references/raci-and-lifecycle.md](references/raci-and-lifecycle.md)
 
-### Vòng đời Spec
-
-```
-DRAFT → IN_REVIEW → APPROVED → FROZEN → DEPRECATED
-```
-
-- **DRAFT:** M1/M2 — free-edit · **IN_REVIEW:** lock direct edit, comment qua PR
-- **APPROVED:** M3 update → **PHẢI tạo Change Request** · **FROZEN:** release branch
-- **DEPRECATED:** feature retired → archive
-
-📚 **CODEOWNERS, Git branching, Handoff notification, Enterprise frontmatter (Jira/Sprint/Approvers), Compliance, Onboarding, KPI:** [references/enterprise-workflow.md](references/enterprise-workflow.md)
+📚 **Compliance, Onboarding, KPI:** [references/enterprise-workflow.md](references/enterprise-workflow.md)
 
 ---
 
@@ -460,16 +447,12 @@ Exit codes: `0` OK · `1` WARN · `2` FAIL (refuse).
 
 📚 **Chi tiết + enforcement rules:** [references/anti-duplication-guards.md](references/anti-duplication-guards.md)
 
-<!-- Version: 2.6.1 -->
-<!-- Last reviewed: 2026-04-14 -->
+📚 **Lịch sử thay đổi:** [CHANGELOG.md](CHANGELOG.md)
+
+<!-- Version: 2.7.0 -->
+<!-- Last reviewed: 2026-05-13 -->
+<!-- Author: cuongbx -->
+<!-- License: MIT -->
+<!-- Tags: prd, spec, sdlc, ba, testing, project-management -->
+<!-- Argument hint: [mode] [feature description hoặc đường dẫn spec] -->
 <!-- Generated by Skill Creator Ultra v1.0 -->
-<!-- Changelog:
-     2.6.1 (2026-04-14): Relax hard BLOCK → WARN + ask confirm. Override mechanism ("vẫn tiếp tục"/"skip check"). Cho phép flexible workflow với warning log. Giữ 4 hard rules (bịa data/secrets/auto-edit spec).
-     2.6.0 (2026-04-14): Quy trình phát triển sản phẩm VCI — strict sequential enforcement; Deep Research Checklist 10 câu BẮT BUỘC trước M1; Hard gates per stage với BLOCK conditions; Pre-check cứng cho M5/M6/M10 (spec APPROVED required); Loopback bắt buộc qua M3+CR khi phát hiện vấn đề; vci-workflow-gates.md mới.
-     2.5.0 (2026-04-14): Việt hóa section headers; thêm "Quy trình end-to-end" 8-stage (Khám phá → Requirements → Stakeholder → Design‖Impl‖Test Prep → Quality Gate → Handoff → Release); shrink Enterprise section; thêm M8/M9 examples; English triggers cho global activation.
-     2.4.0 (2026-04-14): All 10 modes in SDLC pipeline (added M7 Summary); SDLC Stage × Mode Matrix.
-     2.3.0 (2026-04-14): Enterprise multi-role: RACI, CODEOWNERS, spec lifecycle, git branching, handoff, compliance.
-     2.2.0 (2026-04-14): Quick Start, Pipeline diagram, Input/Output Contract, Common Pitfalls.
-     2.1.0 (2026-04-14): Restructured 10 modes into 5 zones with decision tree.
-     2.0.0 (2026-04-13): 10 modes consolidated.
--->

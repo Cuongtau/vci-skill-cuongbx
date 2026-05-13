@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Enterprise Spec Frontmatter Template
 
 Dùng ở đầu `spec.md` cho enterprise project. Mode 1/2 tự động sinh skeleton này nếu project có `.vci-config.yaml` với `enterprise_mode: true`.

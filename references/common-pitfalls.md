@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Common Pitfalls — Các lỗi phổ biến khi dùng vci-skill-cuongbx
 
 | ❌ Anti-pattern | ✅ Đúng cách | Tại sao |

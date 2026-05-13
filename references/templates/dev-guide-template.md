@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Dev Guide Template
 
 Template cho AI khi sinh Dev Guide (Mode 5). Bao gồm cả Backend và Frontend

@@ -1,3 +1,5 @@
+<!-- updated: 2026-05-13 -->
+
 # Test Gen Template
 
 Template cho AI khi sinh Test Cases (Mode 6). Đảm bảo 10/10 cho QA/Tester role.
